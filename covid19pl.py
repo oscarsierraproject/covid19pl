@@ -29,6 +29,7 @@ def intro():
     print("\tWelcome to %s in version %s" % (__file__, __version__))
     print("\tPublished on %s by %s" % (__license__, __author__))
     print("\t%s" % (__copyright__, ))
+    print("\tGitHub: https://github.com/oscarsierraproject/covid19pl") 
     print("")
 # ------------------------------------------------------------------------------ 
 
