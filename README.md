@@ -4,7 +4,33 @@ Collector of Polish data on the number of cases of COVID19 disease caused by the
 # Requirements
 Python3.7 with additional packages listed in requirements.txt file.
 
-# Sample usage:
+# Running options
+$> pythonn ./covid19pl.py --help
+
+        Welcome to ./covid19pl.py in version 1.0.0
+        Published on GNU General Public License 3.0 by oscarsierraproject.eu
+        Copyright 2020, oscarsierraproject.eu
+        GitHub: https://github.com/oscarsierraproject/covid19pl
+
+    Usage: covid19pl.py --workspace=<PATH>
+
+    Options:
+      --version             show program's version number and exit
+      -h, --help            show this help message and exit
+
+      MANDATORY OPTIONS:
+        --workspace=WORKSPACE
+                            path to directory with data [default:
+                            /home/$USER/covid19pl/data]
+
+      OPTIONAL OPTIONS:
+        --debug             Run script in debug mode
+        --display           Display latest data for Poland
+        --gather            Use this option to gather latest data from gov.pl
+
+    Copyright 2020, oscarsierraproject.eu, GNU General Public License 3.0
+
+# Sample usage
 $> python ./covid19pl --display --gather
 
         Welcome to /home/sebastian/repo/covid19pl/covid19pl.py in version 1.0.0
