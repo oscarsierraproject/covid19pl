@@ -69,12 +69,12 @@ def parse_options():
     group.add_option(  "--display", action="store_true", dest="display",
                         help="Display latest data for Poland")
     group.add_option(  "--gather", action="store_true", dest="gather",
+                        help="Use this option to gather latest data from gov.pl")
     group.add_option(  "--workspace", action="store", 
                         type="string", dest="workspace",
                         default=os.path.join( os.path.dirname( os.path.abspath(__file__)), 
                                              "data"),
                         help="path to directory with data [default: %default]")
-                        help="Use this option to gather latest data from gov.pl")
     parser.add_option_group(group)
     (options, args) = parser.parse_args()
     if not options.workspace or not os.path.isdir(options.workspace):
