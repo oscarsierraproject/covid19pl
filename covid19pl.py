@@ -66,7 +66,8 @@ def parse_options():
     group = optparse.OptionGroup(parser, "MANDATORY OPTIONS")
     group.add_option(  "--workspace", action="store", 
                         type="string", dest="workspace",
-                        default=os.getenv('HOME'),
+                        default=os.path.join( os.path.dirname( os.path.abspath(__file__)), 
+                                             "data"),
                         help="path to directory with data [default: %default]")
     parser.add_option_group(group)
     group = optparse.OptionGroup(parser, "OPTIONAL OPTIONS")
