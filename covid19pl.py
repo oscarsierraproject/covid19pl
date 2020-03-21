@@ -4,7 +4,7 @@
 __author__      = "oscarsierraproject.eu"
 __copyright__   = "Copyright 2020, oscarsierraproject.eu"
 __license__     = "GNU General Public License 3.0"
-__version__     = "1.0.0"
+__version__     = "1.1.0"
 __date__        = "21st March 2020"
 __maintainer__  = "oscarsierraproject.eu"
 __email__       = "oscarsierraprojectk@protonmail.com"
@@ -63,19 +63,17 @@ def parse_options():
                                     version = "%prog {}".format(__version__),
                                     epilog = "{}, {}".format(__copyright__,
                                                              __license__))
-    group = optparse.OptionGroup(parser, "MANDATORY OPTIONS")
-    group.add_option(  "--workspace", action="store", 
-                        type="string", dest="workspace",
-                        default=os.path.join( os.path.dirname( os.path.abspath(__file__)), 
-                                             "data"),
-                        help="path to directory with data [default: %default]")
-    parser.add_option_group(group)
     group = optparse.OptionGroup(parser, "OPTIONAL OPTIONS")
     group.add_option(  "--debug", action="store_true", dest="debug",
                         help="Run script in debug mode")
     group.add_option(  "--display", action="store_true", dest="display",
                         help="Display latest data for Poland")
     group.add_option(  "--gather", action="store_true", dest="gather",
+    group.add_option(  "--workspace", action="store", 
+                        type="string", dest="workspace",
+                        default=os.path.join( os.path.dirname( os.path.abspath(__file__)), 
+                                             "data"),
+                        help="path to directory with data [default: %default]")
                         help="Use this option to gather latest data from gov.pl")
     parser.add_option_group(group)
     (options, args) = parser.parse_args()
