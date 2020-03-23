@@ -4,7 +4,7 @@
 __author__      = "oscarsierraproject.eu"
 __copyright__   = "Copyright 2020, oscarsierraproject.eu"
 __license__     = "GNU General Public License 3.0"
-__version__     = "1.2.1"
+__version__     = "1.2.2"
 __date__        = "22nd March 2020"
 __maintainer__  = "oscarsierraproject.eu"
 __email__       = "oscarsierraprojectk@protonmail.com"
@@ -468,5 +468,5 @@ if __name__ == "__main__":
         # Process data and prepare it for display
         covid19_history.load_data_from_files( options.workspace )
         covid19_history.print_summary_data()
-        if options.recipient:
-            covid19_history.send_summary_email( options.recipient )
+    if options.recipient:
+        covid19_history.send_summary_email( options.recipient )
