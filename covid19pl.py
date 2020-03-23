@@ -4,16 +4,17 @@
 __author__      = "oscarsierraproject.eu"
 __copyright__   = "Copyright 2020, oscarsierraproject.eu"
 __license__     = "GNU General Public License 3.0"
-__version__     = "1.1.0"
-__date__        = "21st March 2020"
+__version__     = "1.2.0"
+__date__        = "22nd March 2020"
 __maintainer__  = "oscarsierraproject.eu"
 __email__       = "oscarsierraprojectk@protonmail.com"
-__status__      = "Production"
+__status__      = "Development"
 
 
 from bs4 import BeautifulSoup
 from dataclasses import dataclass, field
 from datetime import datetime
+from dotenv import load_dotenv
 import json
 import logging
 import logging.config
@@ -22,6 +23,7 @@ import os
 import sys
 from typing import Any, List
 import urllib.request
+
 
 # Introduction string ----------------------------------------------------------
 def intro():
@@ -32,6 +34,7 @@ def intro():
     print("\tGitHub: https://github.com/oscarsierraproject/covid19pl") 
     print("")
 # ------------------------------------------------------------------------------ 
+
 
 # Setup logging facility to improve execution readability ----------------------
 logging_level  = logging.WARNING
@@ -57,6 +60,17 @@ logging.config.dictConfig(logging_config)
 root_logger = logging.getLogger()   # Global for the script
 # ------------------------------------------------------------------------------ 
 
+
+# Load environment variables --------------------------------------------------- 
+def load_env_variables(env_file_path):
+    if os.path.isfile(env_file_path):
+        load_dotenv( dotenv_path = env_file_path)
+    else:
+        raise FileNotFoundError("Environment file '%s' does not exist!" %\
+                                 env_file_path)
+# ------------------------------------------------------------------------------ 
+
+
 # Setup initial options parser -------------------------------------------------
 def parse_options():
     parser = optparse.OptionParser( usage = "%prog --workspace=<PATH>",
@@ -68,17 +82,27 @@ def parse_options():
                         help="Run script in debug mode")
     group.add_option(  "--display", action="store_true", dest="display",
                         help="Display latest data for Poland")
+    group.add_option(  "--email", action="store", 
+                        type="string", dest="recipient",
+                        help="email address to send summary")
+    group.add_option(  "--env", action="store", 
+                        type="string", dest="env",
+                        default=os.path.join( 
+                                    os.path.dirname( os.path.abspath(__file__) ),
+                                    ".env"),
+                        help="path to file to ENV variables [default: %default]")
     group.add_option(  "--gather", action="store_true", dest="gather",
                         help="Use this option to gather latest data from gov.pl")
     group.add_option(  "--workspace", action="store", 
                         type="string", dest="workspace",
-                        default=os.path.join( os.path.dirname( os.path.abspath(__file__)), 
-                                             "data"),
+                        default=os.path.join( 
+                                    os.path.dirname( os.path.abspath(__file__)), 
+                                    "data"),
                         help="path to directory with data [default: %default]")
     parser.add_option_group(group)
     (options, args) = parser.parse_args()
     if not options.workspace or not os.path.isdir(options.workspace):
-        parser.error("Directory with data does not exist or was not provided.\n\n"\
+        parser.error("Data directory does not exist or was not provided.\n\n"\
                      "See --help for more details.")
     return options
 # ------------------------------------------------------------------------------ 
@@ -194,6 +218,51 @@ class CovidHistoryContainer(object):
                 _j_data = "".join(f.readlines())
                 self.add_history_data(decoder.decode(_j_data))
 
+    def send_summary_email(self, recipient):
+        import smtplib
+        import email.message
+        from email.mime.text import MIMEText
+
+        SRV_ADDR    = os.getenv("EMAIL_SMTP_SRV_ADDR")
+        SRV_PORT    = os.getenv("EMAIL_SMTP_SRV_PORT")
+        SRV_LOGIN   = os.getenv("EMAIL_SMTP_SRV_LOGIN")
+        SRV_PWD     = os.getenv("EMAIL_SMTP_SRV_PASSWORD")
+
+        if None in [SRV_ADDR, SRV_PORT, SRV_LOGIN, SRV_PWD]:
+            msg = "Unable to send email, no SMTP server configuration provided"
+            self.logger.error(msg)
+            return
+
+        TEXT = ["Summary of COVID19 cases in Poland.",
+                "LEGEND: Value in '()' is a ONE day difference.",
+                ""]
+        for idx in range(len(self._history[-1].items)):
+            TEXT.append( self._get_summary_in_sentence_format( self._history[-1], 
+                                                               self._history[-2], 
+                                                               idx)
+                              )
+        payload = "\n".join(TEXT)
+        
+        # Prepare actual message
+        msg = email.message.EmailMessage()
+        msg['From'] = SRV_LOGIN 
+        msg['To'] = recipient if isinstance(email, list) else recipient
+        msg['Subject'] = "Report: COVID19 cases in Poland"
+        msg.add_header('Content-Type', 'text')
+        msg.set_content( payload )
+        try:
+            server = smtplib.SMTP( SRV_ADDR, SRV_PORT )
+            server.ehlo()
+            server.starttls()
+            server.login( SRV_LOGIN, SRV_PWD )
+            server.send_message(msg)
+            server.close()
+            self.logger.info('Successfully sent mail to %s' % msg["To"])
+        except Exception as err:
+            print(err)
+            self.logger.error("Failed to send mail to %s" % msg["To"])
+            raise err
+
     def print_summary_data(self) -> None:
         """ Display actual summary data and 1 day change. """
         if self._size == 1:
@@ -203,23 +272,50 @@ class CovidHistoryContainer(object):
             msg = "SARS-CoV-2 data with 1 day change summary"
         print(  msg )
         print(  "%-20s: %7s %7s %7s %8s %7s %7s %7s" % \
-                ("Location", "Total", "Death", "Cured", "CHANGE:", "Total", "Death", "Cured"))
+                ("Location", "Total", "Death", "Cured", 
+                 "CHANGE:", "Total", "Death", "Cured")
+             )
         for idx in range(len(self._history[-1].items)):
             if self._size == 1:
                 print(self._history[-1].items[idx])
             else:
-                print( self._get_summary_string( self._history[-1], self._history[-2], idx) )
+                print( self._get_summary_in_table_format(   self._history[-1], 
+                                                            self._history[-2], 
+                                                            idx
+                            ) 
+                )
         print(  "TIMESTAMP OF SAMPLES %s" % \
                 self._history[-1].date.strftime("%Y-%m-%d %H:%M:%S"))
-
-    def _get_summary_string(self, new:LocationsLibrary, old:LocationsLibrary, idx:int) -> str:
-        """ Prepare summary line with diff between 'new' and 'old' data sample """
+    
+    def _get_summary_in_sentence_format(self,  new:LocationsLibrary, 
+                                            old:LocationsLibrary, 
+                                            idx:int) -> str:
+        """ Create sentence with summary and diff between 'new' and 'old' data"""
         if new.items[idx].province != old.items[idx].province:
             raise ValueError("Province does not match")
         _d_dead    = new.items[idx].dead - old.items[idx].dead
         _d_recover = new.items[idx].recovered - old.items[idx].recovered
         _d_total   = new.items[idx].total  - old.items[idx].total
-        return("%-20s: %7d %7d %7d %8s %7d %7d %7d" %
+        text = "%s: %d(%d) cases, %d(%d) dead, %d(%d) recovered."%\
+                (   new.items[idx].province.upper(),
+                    new.items[idx].total,
+                    _d_total, 
+                    new.items[idx].dead, 
+                    _d_dead, 
+                    new.items[idx].recovered, 
+                    _d_recover)
+        return text
+
+    def _get_summary_in_table_format(self,  new:LocationsLibrary, 
+                                            old:LocationsLibrary, 
+                                            idx:int) -> str:
+        """ Create table with summary and diff between 'new' and 'old' data"""
+        if new.items[idx].province != old.items[idx].province:
+            raise ValueError("Province does not match")
+        _d_dead    = new.items[idx].dead - old.items[idx].dead
+        _d_recover = new.items[idx].recovered - old.items[idx].recovered
+        _d_total   = new.items[idx].total  - old.items[idx].total
+        text = "%-20s: %7d %7d %7d %8s %7d %7d %7d" %\
                 (   new.items[idx].province,
                     new.items[idx].total,
                     new.items[idx].dead, 
@@ -227,7 +323,8 @@ class CovidHistoryContainer(object):
                     "", 
                     _d_total, 
                     _d_dead, 
-                    _d_recover))
+                    _d_recover)
+        return text
 
 
 class CovidJsonDecoder(json.JSONDecoder):
@@ -235,7 +332,8 @@ class CovidJsonDecoder(json.JSONDecoder):
 
     def __init__(self, *args, **kwargs):
         self.logger = logging.getLogger(self.__class__.__name__)
-        super(CovidJsonDecoder, self).__init__(object_hook=self.object_hook, *args)
+        super(CovidJsonDecoder, self).__init__( object_hook=self.object_hook,
+                                                *args)
 
     def object_hook(self, obj):
         if "_type" not in obj:
@@ -286,7 +384,8 @@ class CovidJsonEncoder(json.JSONEncoder):
             _j = {}
             return {  "_type": "datetime",
                       "_format": "%s %s" % (self.DATE_FORMAT, self.TIME_FORMAT),
-                      "value": obj.strftime( "%s %s"% (self.DATE_FORMAT, self.TIME_FORMAT)) }
+                      "value": obj.strftime( "%s %s"% ( self.DATE_FORMAT, 
+                                                        self.TIME_FORMAT)) }
         else:
             raise ValueError("Not supported object type")
 
@@ -308,8 +407,11 @@ class CovidDataCrawler(object):
             msg = "Directory '%s' does not exist" % save_dir
             self.logger.error(msg)
             raise ValueError(msg)
-        f_name = "COVID19_PL_%s.json" % ( datetime.now().strftime("%s"%(self.DATE_FORMAT) ), ) 
-        dump_data = json.dumps(self.get_data_from_gov_pl(), cls=CovidJsonEncoder, indent=2)
+        f_name = "COVID19_PL_%s.json" %\
+                 ( datetime.now().strftime("%s" % (self.DATE_FORMAT) ) ) 
+        dump_data = json.dumps( self.get_data_from_gov_pl(), 
+                                cls=CovidJsonEncoder,
+                                indent=2)
         self.logger.info("Dumping latest COVID19 data to file %s" % (f_name, ))
         with open(os.path.join(save_dir, f_name), 'w') as f:
             f.write(dump_data)
@@ -329,12 +431,15 @@ class CovidDataCrawler(object):
         # 1. Gathering "registerData" from a web page
         # 2. Extract JSON data, 'parsedData', from gathered sample
         bs = BeautifulSoup(web_url.read(), 'html.parser')
-        _register_data = json.loads(bs.find(id="registerData").text.replace("'", "\""))
-        _parsed_data = json.loads(_register_data['parsedData']) 
+        _reg_data = json.loads( bs.find(id="registerData").text
+                                                          .replace("'", "\""))
+        _parsed_data = json.loads(_reg_data['parsedData']) 
         for data in _parsed_data:
             l = LocationEntity( province = data['Województwo'],
                                 total    = int(data['Liczba']),
-                                dead     = int(data['Liczba zgonów']) if data['Liczba zgonów'] != '' else 0)
+                                dead     = int(data['Liczba zgonów'])\
+                                           if data['Liczba zgonów'] != ''\
+                                           else 0)
             library.items.append(l)
         library.items = sorted(library.items)
         self.logger.debug("Gathering Polish COVID19 data complete")
@@ -344,12 +449,16 @@ class CovidDataCrawler(object):
 if __name__ == "__main__":
     intro()
     options = parse_options()
-    # Proper order of options handling: debug -> gather -> display
+    # Proper order of options handling: debug -> env -> gather -> display
     if options.debug:
         # Drop down logging level to DEBUG for all handlers
         root_logger.setLevel(logging.DEBUG)
         for h in root_logger.handlers:
             h.setLevel(logging.DEBUG)
+    if options.env:
+        root_logger.info("Loading environment variables from %s"%\
+                         (options.env,) )
+        load_env_variables( options.env)
     if options.gather:
         # Gather latest data from www.gov.pl
         covid19_web_crawler = CovidDataCrawler()
@@ -359,3 +468,5 @@ if __name__ == "__main__":
         covid19_history = CovidHistoryContainer()
         covid19_history.load_data_from_files( options.workspace )
         covid19_history.print_summary_data()
+    if options.recipient:
+        covid19_history.send_summary_email( options.recipient )
