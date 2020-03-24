@@ -4,8 +4,8 @@
 __author__      = "oscarsierraproject.eu"
 __copyright__   = "Copyright 2020, oscarsierraproject.eu"
 __license__     = "GNU General Public License 3.0"
-__version__     = "1.3.0"
-__date__        = "23nd March 2020"
+__version__     = "1.3.1"
+__date__        = "24nd March 2020"
 __maintainer__  = "oscarsierraproject.eu"
 __email__       = "oscarsierraprojectk@protonmail.com"
 __status__      = "Development"
@@ -32,9 +32,9 @@ def intro():
     print("\tWelcome to %s in version %s" % (__file__, __version__))
     print("\tPublished on %s by %s" % (__license__, __author__))
     print("\t%s" % (__copyright__, ))
-    print("\tGitHub: https://github.com/oscarsierraproject/covid19pl") 
+    print("\tGitHub: https://github.com/oscarsierraproject/covid19pl")
     print("")
-# ------------------------------------------------------------------------------ 
+# ------------------------------------------------------------------------------
 
 
 # Setup logging facility to improve execution readability ----------------------
@@ -59,17 +59,17 @@ logging_config = dict(
 )
 logging.config.dictConfig(logging_config)
 root_logger = logging.getLogger()   # Global for the script
-# ------------------------------------------------------------------------------ 
+# ------------------------------------------------------------------------------
 
 
-# Load environment variables --------------------------------------------------- 
+# Load environment variables ---------------------------------------------------
 def load_env_variables(env_file_path):
     if os.path.isfile(env_file_path):
         load_dotenv( dotenv_path = env_file_path)
     else:
         raise FileNotFoundError("Environment file '%s' does not exist!" %\
                                  env_file_path)
-# ------------------------------------------------------------------------------ 
+# ------------------------------------------------------------------------------
 
 
 # Setup initial options parser -------------------------------------------------
@@ -83,12 +83,12 @@ def parse_options():
                         help="Run script in debug mode")
     group.add_option(  "--display", action="store_true", dest="display",
                         help="Display latest data for Poland")
-    group.add_option(  "--email", action="store", 
+    group.add_option(  "--email", action="store",
                         type="string", dest="recipient",
                         help="email address to send summary")
-    group.add_option(  "--env", action="store", 
+    group.add_option(  "--env", action="store",
                         type="string", dest="env",
-                        default=os.path.join( 
+                        default=os.path.join(
                                     os.path.dirname( os.path.abspath(__file__) ),
                                     ".env"),
                         help="path to file to ENV variables [default: %default]")
@@ -96,10 +96,10 @@ def parse_options():
                         help="Use this option to gather latest data from gov.pl")
     group.add_option(  "--plot", action="store_true", dest="plot",
                         help="Create a plots from gathered data")
-    group.add_option(  "--workspace", action="store", 
+    group.add_option(  "--workspace", action="store",
                         type="string", dest="workspace",
-                        default=os.path.join( 
-                                    os.path.dirname( os.path.abspath(__file__)), 
+                        default=os.path.join(
+                                    os.path.dirname( os.path.abspath(__file__)),
                                     "data"),
                         help="path to directory with data [default: %default]")
     parser.add_option_group(group)
@@ -108,14 +108,14 @@ def parse_options():
         parser.error("Data directory does not exist or was not provided.\n\n"\
                      "See --help for more details.")
     return options
-# ------------------------------------------------------------------------------ 
+# ------------------------------------------------------------------------------
 
 
 class BaseEntity():
     """ Base entity for all other entities """
-    
+
     VERSION:    str = "1.0.0"   # Entities MUST be versioned to provide option
-                                # for future improvements. Change in entity 
+                                # for future improvements. Change in entity
                                 # content may impact JSON handlers.
 
 
@@ -194,7 +194,7 @@ class CovidHistoryContainer(object):
             return self._history[self._idx-1]
 
     def add_history_data(self, data:LocationsLibrary) -> None:
-        """ Add data to historical data to history container. 
+        """ Add data to historical data to history container.
 
         It is important to store data sorted at this stage, as methods
         executed later will assume that data is in order.
@@ -206,6 +206,10 @@ class CovidHistoryContainer(object):
         self._history.append(data)
         self._history.sort()
         self._size = len(self._history)
+
+    def get_history(self):
+        """ Return history copy """
+        return self._history[::]
 
     def load_data_from_files(self, save_dir:str="")->None:
         """ Load JSON data from files and store it in history attribute """
@@ -240,15 +244,15 @@ class CovidHistoryContainer(object):
                 "LEGEND: Value in '()' is a ONE day difference.",
                 ""]
         for idx in range(len(self._history[-1].items)):
-            TEXT.append( self._get_summary_in_sentence_format( self._history[-1], 
-                                                               self._history[-2], 
+            TEXT.append( self._get_summary_in_sentence_format( self._history[-1],
+                                                               self._history[-2],
                                                                idx)
                               )
         payload = "\n".join(TEXT)
-        
+
         # Prepare actual message
         msg = email.message.EmailMessage()
-        msg['From'] = SRV_LOGIN 
+        msg['From'] = SRV_LOGIN
         msg['To'] = recipient if isinstance(email, list) else recipient
         msg['Subject'] = "Report: COVID19 cases in Poland"
         msg.add_header('Content-Type', 'text')
@@ -275,23 +279,23 @@ class CovidHistoryContainer(object):
             msg = "SARS-CoV-2 data with 1 day change summary"
         print(  msg )
         print(  "%-20s: %7s %7s %7s %8s %7s %7s %7s" % \
-                ("Location", "Total", "Death", "Cured", 
+                ("Location", "Total", "Death", "Cured",
                  "CHANGE:", "Total", "Death", "Cured")
              )
         for idx in range(len(self._history[-1].items)):
             if self._size == 1:
                 print(self._history[-1].items[idx])
             else:
-                print( self._get_summary_in_table_format(   self._history[-1], 
-                                                            self._history[-2], 
+                print( self._get_summary_in_table_format(   self._history[-1],
+                                                            self._history[-2],
                                                             idx
-                            ) 
+                            )
                 )
         print(  "TIMESTAMP OF SAMPLES %s" % \
                 self._history[-1].date.strftime("%Y-%m-%d %H:%M:%S"))
-    
-    def _get_summary_in_sentence_format(self,  new:LocationsLibrary, 
-                                            old:LocationsLibrary, 
+
+    def _get_summary_in_sentence_format(self,  new:LocationsLibrary,
+                                            old:LocationsLibrary,
                                             idx:int) -> str:
         """ Create sentence with summary and diff between 'new' and 'old' data"""
         if new.items[idx].province != old.items[idx].province:
@@ -302,15 +306,15 @@ class CovidHistoryContainer(object):
         text = "%s: %d(%d) cases, %d(%d) dead, %d(%d) recovered."%\
                 (   new.items[idx].province.upper(),
                     new.items[idx].total,
-                    _d_total, 
-                    new.items[idx].dead, 
-                    _d_dead, 
-                    new.items[idx].recovered, 
+                    _d_total,
+                    new.items[idx].dead,
+                    _d_dead,
+                    new.items[idx].recovered,
                     _d_recover)
         return text
 
-    def _get_summary_in_table_format(self,  new:LocationsLibrary, 
-                                            old:LocationsLibrary, 
+    def _get_summary_in_table_format(self,  new:LocationsLibrary,
+                                            old:LocationsLibrary,
                                             idx:int) -> str:
         """ Create table with summary and diff between 'new' and 'old' data"""
         if new.items[idx].province != old.items[idx].province:
@@ -321,11 +325,11 @@ class CovidHistoryContainer(object):
         text = "%-20s: %7d %7d %7d %8s %7d %7d %7d" %\
                 (   new.items[idx].province,
                     new.items[idx].total,
-                    new.items[idx].dead, 
-                    new.items[idx].recovered, 
-                    "", 
-                    _d_total, 
-                    _d_dead, 
+                    new.items[idx].dead,
+                    new.items[idx].recovered,
+                    "",
+                    _d_total,
+                    _d_dead,
                     _d_recover)
         return text
 
@@ -342,19 +346,19 @@ class CovidJsonDecoder(json.JSONDecoder):
         if "_type" not in obj:
             return obj
         elif obj["_type"] == "LocationsLibrary":
-            return LocationsLibrary(items=obj["value"]["items"], 
+            return LocationsLibrary(items=obj["value"]["items"],
                                     date=obj["value"]["date"],
                                     VERSION=obj["value"]["VERSION"])
             raise NotImplementedError
         elif obj["_type"] == "LocationEntity":
             return LocationEntity(  province=obj["value"]["province"],
                                     total=int( obj["value"]["total"]),
-                                    dead=int( obj["value"]["dead"]), 
+                                    dead=int( obj["value"]["dead"]),
                                     recovered=int( obj["value"]["recovered"] ),
                                     date=obj["value"]["date"],
                                     VERSION=obj["value"]["VERSION"])
             raise NotImplementedError
-        elif obj["_type"] == "datetime": 
+        elif obj["_type"] == "datetime":
             return datetime.strptime( obj['value'], obj['_format'] )
         else:
             msg = "Unsupported object type '%s'" % obj["_type"]
@@ -373,21 +377,21 @@ class CovidJsonEncoder(json.JSONEncoder):
             _j = {}
             for k, v in obj.__dict__.items():
                 _j[k] = v
-            return {'_type': 'LocationsLibrary', 
-                    '_version': obj.VERSION, 
+            return {'_type': 'LocationsLibrary',
+                    '_version': obj.VERSION,
                     'value': _j}
         elif isinstance(obj, LocationEntity):
             _j = {}
             for k, v in obj.__dict__.items():
                 _j[k] = v
-            return {'_type': 'LocationEntity', 
-                    '_version': obj.VERSION, 
+            return {'_type': 'LocationEntity',
+                    '_version': obj.VERSION,
                     'value': _j}
         elif isinstance(obj, datetime):
             _j = {}
             return {  "_type": "datetime",
                       "_format": "%s %s" % (self.DATE_FORMAT, self.TIME_FORMAT),
-                      "value": obj.strftime( "%s %s"% ( self.DATE_FORMAT, 
+                      "value": obj.strftime( "%s %s"% ( self.DATE_FORMAT,
                                                         self.TIME_FORMAT)) }
         else:
             raise ValueError("Not supported object type")
@@ -411,8 +415,8 @@ class CovidDataCrawler(object):
             self.logger.error(msg)
             raise ValueError(msg)
         f_name = "COVID19_PL_%s.json" %\
-                 ( datetime.now().strftime("%s" % (self.DATE_FORMAT) ) ) 
-        dump_data = json.dumps( self.get_data_from_gov_pl(), 
+                 ( datetime.now().strftime("%s" % (self.DATE_FORMAT) ) )
+        dump_data = json.dumps( self.get_data_from_gov_pl(),
                                 cls=CovidJsonEncoder,
                                 indent=2)
         self.logger.info("Dumping latest COVID19 data to file %s" % (f_name, ))
@@ -436,7 +440,7 @@ class CovidDataCrawler(object):
         bs = BeautifulSoup(web_url.read(), 'html.parser')
         _reg_data = json.loads( bs.find(id="registerData").text
                                                           .replace("'", "\""))
-        _parsed_data = json.loads(_reg_data['parsedData']) 
+        _parsed_data = json.loads(_reg_data['parsedData'])
         for data in _parsed_data:
             l = LocationEntity( province = data['Województwo'],
                                 total    = int(data['Liczba']),
@@ -473,28 +477,76 @@ if __name__ == "__main__":
     if options.recipient:
         covid19_history.send_summary_email( options.recipient )
     if options.plot:
-        x = []
-        x_ticks_int = []
-        x_ticks_str = []
-        for idx, sample in enumerate(covid19_history):
-            x.append(sample.items[0].total)
-            x_ticks_int.append(idx)
-            x_ticks_str.append(sample.items[0].date.strftime("%Y-%m-%d"))
+        def calculate_change_rate(samples: List) -> List:
+            ch_rate = []
+            for x, _ in enumerate(samples):
+                if x == 0:
+                    ch_rate.append(1)
+                elif samples[x-1] == 0:
+                    ch_rate.append(samples[x]*100)
+                else:
+                    ch_rate.append((samples[x]-samples[x-1])/samples[x-1]*100)
+            return ch_rate
+        # Create data structure for all tracked provinces
+        plot_data = {}
+        for location in covid19_history.get_history()[0].items:
+            if location.province not in plot_data.keys():
+                plot_data[location.province] = {    "x": [],
+                                                    "xticks": [],
+                                                    "total": [],
+                                                    "dead": [],
+                                                    "recovered": [], }
+        # Populate plot data structure with samples
+        for idx, loc_lib in enumerate(covid19_history):
+            for loc in loc_lib.items:
+                plot_data[loc.province]["x"].append(idx)
+                plot_data[loc.province]["xticks"].append(loc.date.strftime("%Y-%m-%d"))
+                plot_data[loc.province]["total"].append(loc.total)
+                plot_data[loc.province]["dead"].append(loc.dead)
+                plot_data[loc.province]["recovered"].append(loc.recovered)
 
-        fig, ax = plt.subplots()
+        # Prepare the plot
+        fig, ax = plt.subplots(nrows=2, ncols=1, sharex=True)
         fig.set_size_inches(15,15)
-        ax.plot(x_ticks_str, x, "ro", label="Cała Polska")
-        ax.set_xticks(x_ticks_str)
-        for l in ax.get_xticklabels():
+        ax[0].plot( plot_data["Cała Polska"]["xticks"],
+                    plot_data["Cała Polska"]["total"],
+                    "ro",
+                    label="Cała Polska")
+        for l in ax[0].get_xticklabels():
             l.set_rotation(90)
-        ax.set_xlabel("Time day by day")
-        ax.set_ylabel("Total cases reported")
-        ax.set_xlim(xmin=0)
-        ax.set_ylim(ymin=0)
-        ax.set_title("Total COVID19 cases in Poland\nSamples timestamp: %s" %\
-                     covid19_history._history[-1].items[0].date.strftime("%Y-%m-%d %H:%M:%S")) 
-        ax.grid(b=True, which="both", axis="both", linestyle='dotted')
-        ax.legend()
+        ax[0].set_ylabel("Total cases reported")
+        ax[0].set_xlim(xmin=0)
+        ax[0].set_ylim(ymin=0)
+        ax[0].set_title("Total COVID19 cases in Poland\nSamples timestamp: %s" %\
+                     covid19_history._history[-1].items[0].date.strftime("%Y-%m-%d %H:%M:%S"))
+        ax[0].grid(b=True, which="both", axis="both", linestyle='dotted')
+        ax[0].legend()
+        for x, y in zip(plot_data["Cała Polska"]["xticks"],
+                        plot_data["Cała Polska"]["total"]):
+            ax[0].annotate ("%.2f"%y, (x, y), textcoords="offset points", xytext=(0, 10), ha='center')
+
+
+        y_data = calculate_change_rate(plot_data["Cała Polska"]["total"])
+        ax[1].plot( plot_data["Cała Polska"]["xticks"],
+                    y_data,
+                    marker='o', linestyle='dashed',
+                    label="Cała Polska")
+        ax[1].set_xticks(plot_data["Cała Polska"]["xticks"])
+        for l in ax[1].get_xticklabels():
+            l.set_rotation(90)
+        ax[1].set_xlabel("Time day by day")
+        ax[1].set_ylabel("NEW INFECTIONS / TOTAL INFECTIONS")
+        ax[1].set_xlim(xmin=0)
+        ax[1].set_ylim(ymin=0)
+        ax[1].set_title("Total COVID19 cases in Poland\nSamples timestamp: %s" %\
+                     covid19_history._history[-1].items[0].date.strftime("%Y-%m-%d %H:%M:%S"))
+        ax[1].grid(b=True, which="both", axis="both", linestyle='dotted')
+        ax[1].legend()
+
+        for x, y in zip(plot_data["Cała Polska"]["xticks"],
+                        calculate_change_rate(plot_data["Cała Polska"]["total"])):
+            ax[1].annotate ("%.2f"%y, (x, y), textcoords="offset points", xytext=(0, 10), ha='center')
+
         plot_file = os.path.join(options.workspace, "covid19pl.png")
         fig.savefig(plot_file)
         print("Saving plot into a file %s" % (plot_file, ))
