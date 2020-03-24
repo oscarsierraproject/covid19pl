@@ -4,8 +4,8 @@
 __author__      = "oscarsierraproject.eu"
 __copyright__   = "Copyright 2020, oscarsierraproject.eu"
 __license__     = "GNU General Public License 3.0"
-__version__     = "1.2.3"
-__date__        = "22nd March 2020"
+__version__     = "1.3.0"
+__date__        = "23nd March 2020"
 __maintainer__  = "oscarsierraproject.eu"
 __email__       = "oscarsierraprojectk@protonmail.com"
 __status__      = "Development"
@@ -18,6 +18,7 @@ from dotenv import load_dotenv
 import json
 import logging
 import logging.config
+from matplotlib import pyplot as plt
 import optparse
 import os
 import sys
@@ -93,6 +94,8 @@ def parse_options():
                         help="path to file to ENV variables [default: %default]")
     group.add_option(  "--gather", action="store_true", dest="gather",
                         help="Use this option to gather latest data from gov.pl")
+    group.add_option(  "--plot", action="store_true", dest="plot",
+                        help="Create a plots from gathered data")
     group.add_option(  "--workspace", action="store", 
                         type="string", dest="workspace",
                         default=os.path.join( 
@@ -185,7 +188,7 @@ class CovidHistoryContainer(object):
     def __next__(self) -> LocationsLibrary:
         if self._idx >= self._size:
             self._idx = 0
-            return StopIteration
+            raise StopIteration
         else:
             self._idx = self._idx + 1
             return self._history[self._idx-1]
@@ -469,3 +472,29 @@ if __name__ == "__main__":
         covid19_history.print_summary_data()
     if options.recipient:
         covid19_history.send_summary_email( options.recipient )
+    if options.plot:
+        x = []
+        x_ticks_int = []
+        x_ticks_str = []
+        for idx, sample in enumerate(covid19_history):
+            x.append(sample.items[0].total)
+            x_ticks_int.append(idx)
+            x_ticks_str.append(sample.items[0].date.strftime("%Y-%m-%d"))
+
+        fig, ax = plt.subplots()
+        fig.set_size_inches(15,15)
+        ax.plot(x_ticks_str, x, "ro", label="Cała Polska")
+        ax.set_xticks(x_ticks_str)
+        for l in ax.get_xticklabels():
+            l.set_rotation(90)
+        ax.set_xlabel("Time day by day")
+        ax.set_ylabel("Total cases reported")
+        ax.set_xlim(xmin=0)
+        ax.set_ylim(ymin=0)
+        ax.set_title("Total COVID19 cases in Poland\nSamples timestamp: %s" %\
+                     covid19_history._history[-1].items[0].date.strftime("%Y-%m-%d %H:%M:%S")) 
+        ax.grid(b=True, which="both", axis="both", linestyle='dotted')
+        ax.legend()
+        plot_file = os.path.join(options.workspace, "covid19pl.png")
+        fig.savefig(plot_file)
+        print("Saving plot into a file %s" % (plot_file, ))

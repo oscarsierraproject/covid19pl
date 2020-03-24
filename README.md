@@ -4,9 +4,10 @@ SARS-CoV-2 virus. Information chaos can be tiring. Insulate yourself from him
 and stay in touch with relevant information on demand.
 
 ## Changelog
+  - Ver. 1.3.0:  Add plot with total cases in Poland
   - Ver. 1.2.0:  Add email reports with 
   - Ver. 1.1.0:  Remove **mandatory** options, add default path to
-                 workspace direcotry containing COVI19 data
+                 workspace direcotry containing COVID19 data
   - Ver. 1.0.0:  Initial script version
 
 ## Requirements
@@ -27,6 +28,8 @@ export EMAIL_SMTP_SRV_PORT=587
 export EMAIL_SMTP_SRV_LOGIN="SOME_GMAIL_ADDRESS@gmail.com"
 export EMAIL_SMTP_SRV_PASSWORD="SECRET PASSWORD"
 ```
+Using Google SMTP servers may require enable less secure apps to access 
+gmail accounts.
 
 ## How to use the script
 In order to get help please use **--help** option.
