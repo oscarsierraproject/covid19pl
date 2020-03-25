@@ -1,9 +1,12 @@
 # covid19pl
 Collector of Polish data on the number of cases of COVID19 disease caused by the
 SARS-CoV-2 virus. Information chaos can be tiring. Insulate yourself from him
-and stay in touch with relevant information on demand.
+and stay in touch with relevant information on demand. Take a look how disease
+spreads in Poland and start following the guidelines and recommendations of
+official government health authorities. 
 
 ## Changelog
+  - Ver. 1.4.0:  Split project into multiple files
   - Ver. 1.3.0:  Add plot with total cases in Poland
   - Ver. 1.2.0:  Add email reports with 
   - Ver. 1.1.0:  Remove **mandatory** options, add default path to
@@ -32,7 +35,10 @@ Using Google SMTP servers may require enable less secure apps to access
 gmail accounts.
 
 ## How to use the script
-In order to get help please use **--help** option.
+In order to get help please go to the directory with **covid19pl.py** file and
+execute **python ./covid19pl.py --help** command. Keep in mind that at before
+you do that all packages listed in **requirements.txt** files should be 
+installed either in your system globally, or in virtual environment.
 
 ## Sample usage
 To run the script with on screen data display and sending email on 
