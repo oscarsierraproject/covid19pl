@@ -6,7 +6,7 @@
     "date": {
       "_type": "datetime",
       "_format": "%Y-%m-%d %H:%M:%S",
-      "value": "2020-03-25 18:34:57"
+      "value": "2020-03-25 23:55:01"
     },
     "items": [
       {
@@ -14,13 +14,13 @@
         "_version": "1.0.0",
         "value": {
           "province": "Ca\u0142a Polska",
-          "total": 1031,
+          "total": 1051,
           "dead": 14,
           "recovered": 0,
           "date": {
             "_type": "datetime",
             "_format": "%Y-%m-%d %H:%M:%S",
-            "value": "2020-03-25 18:34:57"
+            "value": "2020-03-25 23:55:01"
           },
           "VERSION": "1.0.0"
         }
@@ -36,7 +36,7 @@
           "date": {
             "_type": "datetime",
             "_format": "%Y-%m-%d %H:%M:%S",
-            "value": "2020-03-25 18:34:57"
+            "value": "2020-03-25 23:55:01"
           },
           "VERSION": "1.0.0"
         }
@@ -46,13 +46,13 @@
         "_version": "1.0.0",
         "value": {
           "province": "kujawsko-pomorskie",
-          "total": 24,
+          "total": 27,
           "dead": 0,
           "recovered": 0,
           "date": {
             "_type": "datetime",
             "_format": "%Y-%m-%d %H:%M:%S",
-            "value": "2020-03-25 18:34:57"
+            "value": "2020-03-25 23:55:01"
           },
           "VERSION": "1.0.0"
         }
@@ -62,13 +62,13 @@
         "_version": "1.0.0",
         "value": {
           "province": "lubelskie",
-          "total": 61,
+          "total": 63,
           "dead": 2,
           "recovered": 0,
           "date": {
             "_type": "datetime",
             "_format": "%Y-%m-%d %H:%M:%S",
-            "value": "2020-03-25 18:34:57"
+            "value": "2020-03-25 23:55:01"
           },
           "VERSION": "1.0.0"
         }
@@ -84,7 +84,7 @@
           "date": {
             "_type": "datetime",
             "_format": "%Y-%m-%d %H:%M:%S",
-            "value": "2020-03-25 18:34:57"
+            "value": "2020-03-25 23:55:01"
           },
           "VERSION": "1.0.0"
         }
@@ -100,7 +100,7 @@
           "date": {
             "_type": "datetime",
             "_format": "%Y-%m-%d %H:%M:%S",
-            "value": "2020-03-25 18:34:57"
+            "value": "2020-03-25 23:55:01"
           },
           "VERSION": "1.0.0"
         }
@@ -110,13 +110,13 @@
         "_version": "1.0.0",
         "value": {
           "province": "ma\u0142opolskie",
-          "total": 52,
+          "total": 56,
           "dead": 0,
           "recovered": 0,
           "date": {
             "_type": "datetime",
             "_format": "%Y-%m-%d %H:%M:%S",
-            "value": "2020-03-25 18:34:57"
+            "value": "2020-03-25 23:55:01"
           },
           "VERSION": "1.0.0"
         }
@@ -132,7 +132,7 @@
           "date": {
             "_type": "datetime",
             "_format": "%Y-%m-%d %H:%M:%S",
-            "value": "2020-03-25 18:34:57"
+            "value": "2020-03-25 23:55:01"
           },
           "VERSION": "1.0.0"
         }
@@ -148,7 +148,7 @@
           "date": {
             "_type": "datetime",
             "_format": "%Y-%m-%d %H:%M:%S",
-            "value": "2020-03-25 18:34:57"
+            "value": "2020-03-25 23:55:01"
           },
           "VERSION": "1.0.0"
         }
@@ -158,13 +158,13 @@
         "_version": "1.0.0",
         "value": {
           "province": "podlaskie",
-          "total": 9,
+          "total": 10,
           "dead": 0,
           "recovered": 0,
           "date": {
             "_type": "datetime",
             "_format": "%Y-%m-%d %H:%M:%S",
-            "value": "2020-03-25 18:34:57"
+            "value": "2020-03-25 23:55:01"
           },
           "VERSION": "1.0.0"
         }
@@ -180,7 +180,7 @@
           "date": {
             "_type": "datetime",
             "_format": "%Y-%m-%d %H:%M:%S",
-            "value": "2020-03-25 18:34:57"
+            "value": "2020-03-25 23:55:01"
           },
           "VERSION": "1.0.0"
         }
@@ -196,7 +196,7 @@
           "date": {
             "_type": "datetime",
             "_format": "%Y-%m-%d %H:%M:%S",
-            "value": "2020-03-25 18:34:57"
+            "value": "2020-03-25 23:55:01"
           },
           "VERSION": "1.0.0"
         }
@@ -206,13 +206,13 @@
         "_version": "1.0.0",
         "value": {
           "province": "wielkopolskie",
-          "total": 55,
+          "total": 57,
           "dead": 2,
           "recovered": 0,
           "date": {
             "_type": "datetime",
             "_format": "%Y-%m-%d %H:%M:%S",
-            "value": "2020-03-25 18:34:57"
+            "value": "2020-03-25 23:55:01"
           },
           "VERSION": "1.0.0"
         }
@@ -222,13 +222,13 @@
         "_version": "1.0.0",
         "value": {
           "province": "zachodniopomorskie",
-          "total": 30,
+          "total": 31,
           "dead": 0,
           "recovered": 0,
           "date": {
             "_type": "datetime",
             "_format": "%Y-%m-%d %H:%M:%S",
-            "value": "2020-03-25 18:34:57"
+            "value": "2020-03-25 23:55:01"
           },
           "VERSION": "1.0.0"
         }
@@ -244,7 +244,7 @@
           "date": {
             "_type": "datetime",
             "_format": "%Y-%m-%d %H:%M:%S",
-            "value": "2020-03-25 18:34:57"
+            "value": "2020-03-25 23:55:01"
           },
           "VERSION": "1.0.0"
         }
@@ -254,13 +254,13 @@
         "_version": "1.0.0",
         "value": {
           "province": "\u015bl\u0105skie",
-          "total": 102,
+          "total": 107,
           "dead": 2,
           "recovered": 0,
           "date": {
             "_type": "datetime",
             "_format": "%Y-%m-%d %H:%M:%S",
-            "value": "2020-03-25 18:34:57"
+            "value": "2020-03-25 23:55:01"
           },
           "VERSION": "1.0.0"
         }
@@ -270,13 +270,13 @@
         "_version": "1.0.0",
         "value": {
           "province": "\u015bwi\u0119tokrzyskie",
-          "total": 12,
+          "total": 14,
           "dead": 1,
           "recovered": 0,
           "date": {
             "_type": "datetime",
             "_format": "%Y-%m-%d %H:%M:%S",
-            "value": "2020-03-25 18:34:57"
+            "value": "2020-03-25 23:55:01"
           },
           "VERSION": "1.0.0"
         }
