@@ -55,7 +55,7 @@ COMMANDS = (
             f"git rebase {REMOTE} {BRANCH}",
             f"git add {FILE_PATH}",
             f"git commit -m \"{COMMIT_TITLE_MSG}\" -m \"{COMMIT_BODY_MSG}\"",
-            #f"git push {REMOTE} {BRANCH}",
+            f"git push {REMOTE} {BRANCH}",
            )
 
 # Execute commands and delivery data ------------------------------------------
