@@ -6,7 +6,7 @@ __copyright__   = "Copyright 2020, oscarsierraproject.eu"
 __license__     = "GNU General Public License 3.0"
 __date__        = "25th March 2020"
 __maintainer__  = "oscarsierraproject.eu"
-__email__       = "oscarsierraprojectk@protonmail.com"
+__email__       = "oscarsierraproject@protonmail.com"
 __status__      = "Development"
 
 import email.message

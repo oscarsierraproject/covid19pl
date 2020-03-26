@@ -3,6 +3,14 @@ from datetime import datetime
 from typing import Any, List
 
 
+__author__      = "oscarsierraproject.eu"
+__copyright__   = "Copyright 2020, oscarsierraproject.eu"
+__license__     = "GNU General Public License 3.0"
+__date__        = "25th March 2020"
+__maintainer__  = "oscarsierraproject.eu"
+__email__       = "oscarsierraproject@protonmail.com"
+__status__      = "Development"
+
 class BaseEntity():
     """ Base entity for all other entities """
 
