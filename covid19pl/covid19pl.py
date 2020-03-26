@@ -80,7 +80,7 @@ if __name__ == "__main__":
         root_logger.setLevel(logging.DEBUG)
         for h in root_logger.handlers:
             h.setLevel(logging.DEBUG)
-    if options.env:
+    if options.recipient and options.env:
         root_logger.info("Loading environment variables from %s"%\
                          (options.env,) )
         utils.load_env_variables( options.env)
