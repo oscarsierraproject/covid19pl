@@ -6,6 +6,8 @@ spreads in Poland and start following the guidelines and recommendations of
 official government health authorities. 
 
 ## Changelog
+  - Ver. 1.4.2:  Add plot with new cases per day
+  - Ver. 1.4.1:  Small corrections in the code
   - Ver. 1.4.0:  Split project into multiple files
   - Ver. 1.3.0:  Add plot with total cases in Poland
   - Ver. 1.2.0:  Add email reports with 
@@ -41,14 +43,13 @@ you do that all packages listed in **requirements.txt** files should be
 installed either in your system globally, or in virtual environment.
 
 ## Sample usage
-To run the script with on screen data display and sending email on 
-'sent\_it\_to@gmail.com' run command:
+To run the script with gathering, displaying and plotting data use:
 ```
-$> python ./covid19pl --display --gather --email=sent_it_to@gmail.com
+$> python ./covid19pl.py --display --gather --plot
 ```
 Together with sending email you this is the output you will see in your terminal:
 ```
-Welcome to /home/sebastian/repo/covid19pl/covid19pl.py in version 1.2.0
+Welcome to /home/.../repo/covid19pl/covid19pl/covid19pl.py in version 1.2.0
 Published on GNU General Public License 3.0 by oscarsierraproject.eu
 Copyright 2020, oscarsierraproject.eu
 GitHub: https://github.com/oscarsierraproject/covid19pl
