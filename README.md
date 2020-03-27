@@ -6,6 +6,7 @@ spreads in Poland and start following the guidelines and recommendations of
 official government health authorities. 
 
 ## Changelog
+  - Ver. 1.4.3:  Fix data pushing script commands syntax
   - Ver. 1.4.2:  Add plot with new cases per day
   - Ver. 1.4.1:  Small corrections in the code
   - Ver. 1.4.0:  Split project into multiple files

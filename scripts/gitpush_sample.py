@@ -51,11 +51,12 @@ FILE_PATH   = os.path.join(BASE_DIR, "covid19pl/data", FILE_NAME)
 
 # Prepare commands to execute -------------------------------------------------
 COMMANDS = (
-            f"git fetch {REMOTE} {BRANCH}",
-            f"git rebase {REMOTE} {BRANCH}",
-            f"git add {FILE_PATH}",
-            f"git commit -m \"{COMMIT_TITLE_MSG}\" -m \"{COMMIT_BODY_MSG}\"",
-            f"git push {REMOTE} {BRANCH}",
+            f"cd {BASE_DIR} && git fetch {REMOTE} {BRANCH}",
+            f"cd {BASE_DIR} && git rebase {REMOTE} {BRANCH}",
+            f"cd {BASE_DIR} && git add {FILE_PATH}",
+            f"cd {BASE_DIR} && git commit -m \"{COMMIT_TITLE_MSG}\"\
+                                          -m \"{COMMIT_BODY_MSG}\"",
+            f"cd {BASE_DIR} && git push {REMOTE} {BRANCH}",
            )
 
 # Execute commands and delivery data ------------------------------------------
