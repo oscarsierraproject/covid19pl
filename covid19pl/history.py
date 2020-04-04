@@ -13,7 +13,9 @@ import email.message
 from email.mime.text import MIMEText
 import logging
 import os
+import pandas as pd
 import smtplib
+from typing import List
 
 from entities import LocationEntity, LocationsLibrary
 from serializers import CovidJsonDecoder
@@ -24,7 +26,7 @@ class Covid19HistoryContainer(object):
     def __init__(self) -> None:
         self._idx:int = 0
         self._size:int = 0
-        self._history: list[LocationsLibrary] = []
+        self._history: List[LocationsLibrary] = []
         self.logger = logging.getLogger(self.__class__.__name__)
 
     def __iter__(self) -> object:
@@ -46,15 +48,54 @@ class Covid19HistoryContainer(object):
         """
         if not isinstance(data, LocationsLibrary):
             raise ValueError("Not compatible data type")
-        # WARNING: It is important to have data sorted at this stage!
+        # : It is important to have data sorted at this stage!
         data.items.sort()
         self._history.append(data)
         self._history.sort()
         self._size = len(self._history)
 
-    def get_history(self):
-        """ Return history copy """
+    def get_history(self) -> List[LocationsLibrary]:
+        """ Return a copy of collected history"""
         return self._history[::]
+
+    def to_csv(self) -> None:
+        """ Save collected data in CSV file """
+        f_name = os.path.join( os.path.dirname( os.path.abspath(__file__) ),
+                                    "data/covid19pl.csv")
+        msg = f"Saving data in CSV file: {f_name}"
+        print(msg)
+        self.logger.info(msg)
+        self.to_dataframe().to_csv(f_name)
+        return None
+            
+    def to_dataframe(self) -> pd.DataFrame:
+        """ Return collected data in form of Pandas DataFrame 
+        
+            Example format:
+                Date,   Type,   Province_1, ..., Province_N 
+            0   str ,   str,    int,      , ..., int
+            1   str ,   str,    int,      , ..., int
+            ...
+        """ 
+        _final = pd.DataFrame()
+        for loc_lib in self.get_history():
+            date_str = loc_lib.date.strftime("%Y-%m-%d %H:%M:%S")
+            _columns        = [ "Date", "Type", ]
+            _values_dead    = [ date_str, "dead"]
+            _values_recover = [ date_str, "recovered"]
+            _values_total   = [ date_str, "total"]
+            for loc in loc_lib.items:
+                _columns.append( loc.province )
+                _values_dead.append( loc.dead )
+                _values_recover.append( loc.recovered )
+                _values_total.append( loc.total )
+            _dead_df    = pd.DataFrame( [_values_dead, ], columns=_columns,) 
+            _recover_df = pd.DataFrame( [_values_recover, ], columns=_columns,) 
+            _total_df   = pd.DataFrame( [_values_total, ], columns=_columns,) 
+            _final      = _final.append(_dead_df, ignore_index=True)
+            _final      = _final.append(_recover_df, ignore_index=True)
+            _final      = _final.append(_total_df, ignore_index=True)
+        return _final
 
     def load_data_from_files(self, save_dir:str="")->None:
         """ Load JSON data from files and store it in history attribute """
@@ -71,7 +112,7 @@ class Covid19HistoryContainer(object):
                 self.add_history_data(decoder.decode(_j_data))
 
     def send_summary_email(self, recipient):
-
+        """ Send email with summary data """
         SRV_ADDR    = os.getenv("EMAIL_SMTP_SRV_ADDR")
         SRV_PORT    = os.getenv("EMAIL_SMTP_SRV_PORT")
         SRV_LOGIN   = os.getenv("EMAIL_SMTP_SRV_LOGIN")

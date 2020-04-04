@@ -49,13 +49,15 @@ def parse_options():
     group.add_option(  "--env", action="store",
                         type="string", dest="env",
                         default=os.path.join(
-                                    os.path.dirname( os.path.abspath(__file__) ),
+                                    os.path.dirname(os.path.abspath(__file__)),
                                     ".env"),
-                        help="path to file to ENV variables [default: %default]")
+                        help="path to file with variables [default: %default]")
     group.add_option(  "--gather", action="store_true", dest="gather",
-                        help="Use this option to gather latest data from gov.pl")
+                        help="Gather latest data from gov.pl")
     group.add_option(  "--plot", action="store_true", dest="plot",
                         help="Create a plots from gathered data")
+    group.add_option(  "--save_csv", action="store_true", dest="save_csv",
+                        help="Save collected data in UTF-8 CSV file")
     group.add_option(  "--workspace", action="store",
                         type="string", dest="workspace",
                         default=os.path.join(
@@ -95,4 +97,7 @@ if __name__ == "__main__":
     if options.recipient:
         covid19_history.send_summary_email( options.recipient )
     if options.plot:
-        plot.plot_summary_data(covid19_history, options.workspace)
+        plot.plot_summary_data( covid19_history.to_dataframe(), 
+                                options.workspace)
+    if options.save_csv:
+        covid19_history.to_csv()
