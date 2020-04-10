@@ -6,9 +6,11 @@ spreads in Poland and start following the guidelines and recommendations of
 official government health authorities. 
 
 ## Changelog
-  - Ver. 1.5.0:  Introduce Pandas library to simplify and speedup data analysis
-                 Remove a chart showing % of new cases per day
-                 Gathered data is now possible to be saved in CSV file
+  - Ver. 1.5.1:  Draw a chart with % of new cases in compare to total number of
+    cases. Fix minor issues related to versioning, setup.py, and documentation.
+  - Ver. 1.5.0:  Introduce Pandas library to simplify and speedup data analysis.
+    Remove a chart showing % of new cases per day.  Gathered data is now possible
+    to be saved in CSV file.
   - Ver. 1.4.3:  Fix data pushing script commands syntax
   - Ver. 1.4.2:  Add plot with new cases per day
   - Ver. 1.4.1:  Small corrections in the code

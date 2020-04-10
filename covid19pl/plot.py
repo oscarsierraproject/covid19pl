@@ -4,7 +4,7 @@
 __author__      = "oscarsierraproject.eu"
 __copyright__   = "Copyright 2020, oscarsierraproject.eu"
 __license__     = "GNU General Public License 3.0"
-__date__        = "26th March 2020"
+__date__        = "10th April 2020"
 __maintainer__  = "oscarsierraproject.eu"
 __email__       = "oscarsierraproject@protonmail.com"
 __status__      = "Development"
@@ -15,11 +15,9 @@ from matplotlib import pyplot as plt
 import os
 import pandas as pd
 from typing import Any, List
-
 from entities import LocationEntity, LocationsLibrary
 from history import Covid19HistoryContainer
 import utils
-
 
 def plot_summary_data(df: pd.DataFrame, workspace:str) ->None:
     """ Create a plots showing summary of gathered data """
@@ -30,10 +28,10 @@ def plot_summary_data(df: pd.DataFrame, workspace:str) ->None:
     _timestamp = _plot_df.at[ _plot_df.index[-1], "Date"]
     # Strip data to keep only day and month value
     _plot_df["Date"] = _plot_df["Date"].map(lambda x: x[5:10:])
-    _plot_df["change"] = _plot_df["Cała Polska"].diff()
-    
+    _plot_df["New cases"] = _plot_df["Cała Polska"].diff()
+    _plot_df["New cases %"] = _plot_df["New cases"]/_plot_df["Cała Polska"]*100
     # Prepare the plot
-    fig, ax = plt.subplots(nrows=2, ncols=1, sharex=False)
+    fig, ax = plt.subplots(nrows=3, ncols=1, sharex=False)
     fig.set_size_inches(15,15)
     # Prepare 1st plot: TOTAL CASES REPORTED ----------------------------------
     ax[0].plot( _plot_df["Date"],
@@ -53,7 +51,7 @@ def plot_summary_data(df: pd.DataFrame, workspace:str) ->None:
                                           xytext=(0, 5), ha='center')
     # Prepare 2nd plot: NUMBER OF NEW INFECTIONS ------------------------------
     ax[1].plot( _plot_df["Date"],
-                _plot_df["change"],
+                _plot_df["New cases"],
                 color="grey", marker='o', linestyle='dashed',
                 label="Cała Polska")
     ax[1].set_xticks(_plot_df["Date"])
@@ -65,9 +63,28 @@ def plot_summary_data(df: pd.DataFrame, workspace:str) ->None:
     ax[1].set_title("")
     ax[1].grid(b=True, which="both", axis="both", linestyle='dotted')
     ax[1].legend()
-    for x, y in zip(_plot_df["Date"], _plot_df["change"]):
+    for x, y in zip(_plot_df["Date"], _plot_df["New cases"]):
         ax[1].annotate ("%.0f"%y, (x, y), textcoords="offset points", 
                                           xytext=(0, 5), ha='center')
+    # Prepare 2nd plot: NUMBER OF NEW INFECTIONS ------------------------------
+    ax[2].plot( _plot_df["Date"],
+                _plot_df["New cases %"],
+                color="blue", marker='o', linestyle='dashed',
+                label="Cała Polska")
+    ax[2].set_xticks(_plot_df["Date"])
+    for l in ax[2].get_xticklabels():
+        l.set_rotation(90)
+    ax[2].set_ylabel("NEW INFECTIONS / TOTAL INFECTIONS * 100")
+    ax[2].set_xlim(xmin=0)
+    ax[2].set_ylim(ymin=0)
+    ax[2].set_ylim(ymax=110)
+    ax[2].set_title("")
+    ax[2].grid(b=True, which="both", axis="both", linestyle='dotted')
+    ax[2].legend()
+    for x, y in zip(_plot_df["Date"], _plot_df["New cases %"]):
+        ax[2].annotate ("%.1f"%y, (x, y), textcoords="offset points", 
+                                          xytext=(0, 5), ha='center',
+                                          rotation=45)
     # Save plot in a file -----------------------------------------------------
     plot_file = os.path.join(workspace, "covid19pl.png")
     fig.savefig(plot_file)

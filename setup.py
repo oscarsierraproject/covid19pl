@@ -44,6 +44,7 @@ config = {
                                 "beautifulsoup4==4.8.2",
                                 "bs4==0.0.1",
                                 "matplotlib==3.2.1",
+                                "pandas==1.0.3",
                                 "python-dotenv==0.12.0",
                               ],
     'dependency_links'      : [],
