@@ -65,6 +65,12 @@ class Covid19DataCrawler(object):
                                                           .replace("'", "\""))
         _parsed_data = json.loads(_reg_data['parsedData'])
         for data in _parsed_data:
+            """ On March 23rd 2020 there was an issue with data on gov.pl
+            website. Empty records with no data were added, as well as some 
+            strange links. If bellow was introduced to deal with corrupted data
+            """
+            if "https" in data["Województwo"] or data["Województwo"] == "":
+                continue
             l = LocationEntity( province = data['Województwo'],
                                 total    = int(data['Liczba']),
                                 dead     = int(data['Liczba zgonów'])\
