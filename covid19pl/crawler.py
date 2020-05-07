@@ -4,7 +4,7 @@
 __author__      = "oscarsierraproject.eu"
 __copyright__   = "Copyright 2020, oscarsierraproject.eu"
 __license__     = "GNU General Public License 3.0"
-__date__        = "25nd March 2020"
+__date__        = "7th May 2020"
 __maintainer__  = "oscarsierraproject.eu"
 __email__       = "oscarsierraproject@protonmail.com"
 __status__      = "Development"
@@ -72,8 +72,8 @@ class Covid19DataCrawler(object):
             if "https" in data["Województwo"] or data["Województwo"] == "":
                 continue
             l = LocationEntity( province = data['Województwo'],
-                                total    = int(data['Liczba']),
-                                dead     = int(data['Liczba zgonów'])\
+                                total    = int(data['Liczba'].replace(" ","")),
+                                dead     = int(data['Liczba zgonów'].replace(" ",""))\
                                            if data['Liczba zgonów'] != ''\
                                            else 0)
             library.items.append(l)
