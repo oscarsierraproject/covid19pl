@@ -21,7 +21,7 @@ import utils
 
 def plot_summary_data(df: pd.DataFrame, workspace:str) ->None:
     """ Create a plots showing summary of gathered data """
-    
+
     # Create data structure for all tracked provinces -------------------------
     _plot_df = df[ df["Type"]=="total"][ ["Date", "Cała Polska",] ]
     _plot_df = _plot_df.reset_index(drop=True)
@@ -36,7 +36,7 @@ def plot_summary_data(df: pd.DataFrame, workspace:str) ->None:
     # Prepare 1st plot: TOTAL CASES REPORTED ----------------------------------
     ax[0].plot( _plot_df["Date"],
                 _plot_df["Cała Polska"],
-                color="red", marker='o', linestyle='dashed', 
+                color="red", marker='o', linestyle='dashed',
                 label="Cała Polska")
     for l in ax[0].get_xticklabels():
         l.set_rotation(90)
@@ -46,9 +46,11 @@ def plot_summary_data(df: pd.DataFrame, workspace:str) ->None:
     ax[0].set_title(f"COVID19 cases in Poland\nSamples timestamp: {_timestamp}")
     ax[0].grid(b=True, which="both", axis="both", linestyle='dotted')
     ax[0].legend()
-    for x, y in zip(_plot_df["Date"], _plot_df["Cała Polska"]):
-        ax[0].annotate ("%.0f"%y, (x, y), textcoords="offset points",
-                                          xytext=(0, 5), ha='center')
+    ax[0].annotate ("%.0f"% _plot_df["Cała Polska"].iloc[-1],
+                            ( _plot_df["Date"].iloc[-1],
+                              _plot_df["Cała Polska"].iloc[-1]),
+                            textcoords="offset points",
+                           xytext=(0, 5), ha='center')
     # Prepare 2nd plot: NUMBER OF NEW INFECTIONS ------------------------------
     ax[1].plot( _plot_df["Date"],
                 _plot_df["New cases"],
@@ -63,9 +65,11 @@ def plot_summary_data(df: pd.DataFrame, workspace:str) ->None:
     ax[1].set_title("")
     ax[1].grid(b=True, which="both", axis="both", linestyle='dotted')
     ax[1].legend()
-    for x, y in zip(_plot_df["Date"], _plot_df["New cases"]):
-        ax[1].annotate ("%.0f"%y, (x, y), textcoords="offset points", 
-                                          xytext=(0, 5), ha='center')
+    ax[1].annotate ("%.0f"% _plot_df["New cases"].iloc[-1],
+                            ( _plot_df["Date"].iloc[-1],
+                              _plot_df["New cases"].iloc[-1]),
+                            textcoords="offset points",
+                            xytext=(0, 5), ha='center')
     # Prepare 2nd plot: NUMBER OF NEW INFECTIONS ------------------------------
     ax[2].plot( _plot_df["Date"],
                 _plot_df["New cases %"],
@@ -81,10 +85,11 @@ def plot_summary_data(df: pd.DataFrame, workspace:str) ->None:
     ax[2].set_title("")
     ax[2].grid(b=True, which="both", axis="both", linestyle='dotted')
     ax[2].legend()
-    for x, y in zip(_plot_df["Date"], _plot_df["New cases %"]):
-        ax[2].annotate ("%.1f"%y, (x, y), textcoords="offset points", 
-                                          xytext=(0, 5), ha='center',
-                                          rotation=45)
+    ax[2].annotate ("%.0f"% _plot_df["New cases %"].iloc[-1],
+                            ( _plot_df["Date"].iloc[-1],
+                              _plot_df["New cases %"].iloc[-1]),
+                            textcoords="offset points",
+                            xytext=(0, 5), ha='center')
     # Save plot in a file -----------------------------------------------------
     plot_file = os.path.join(workspace, "covid19pl.png")
     fig.savefig(plot_file)
