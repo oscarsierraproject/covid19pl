@@ -85,7 +85,7 @@ def plot_summary_data(df: pd.DataFrame, workspace:str) ->None:
     ax[2].set_title("")
     ax[2].grid(b=True, which="both", axis="both", linestyle='dotted')
     ax[2].legend()
-    ax[2].annotate ("%.0f"% _plot_df["New cases %"].iloc[-1],
+    ax[2].annotate ("%.1f"% _plot_df["New cases %"].iloc[-1],
                             ( _plot_df["Date"].iloc[-1],
                               _plot_df["New cases %"].iloc[-1]),
                             textcoords="offset points",
