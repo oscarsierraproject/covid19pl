@@ -31,13 +31,18 @@ def plot_summary_data(df: pd.DataFrame, workspace:str) ->None:
     _plot_df["New cases"] = _plot_df["Cała Polska"].diff()
     _plot_df["New cases %"] = _plot_df["New cases"]/_plot_df["Cała Polska"]*100
     # Prepare the plot
-    fig, ax = plt.subplots(nrows=3, ncols=1, sharex=False)
+    fig, ax = plt.subplots(nrows=2, ncols=1, sharex=False)
     fig.set_size_inches(15,15)
     # Prepare 1st plot: TOTAL CASES REPORTED ----------------------------------
     ax[0].plot( _plot_df["Date"],
                 _plot_df["Cała Polska"],
-                color="red", marker='o', linestyle='dashed',
+                color="red", marker='.', linestyle='solid',
                 label="Cała Polska")
+    # Show label on every week
+    for idx, xlabel_i in enumerate(ax[0].axes.get_xticklabels()):
+        if idx % 7 != 0:
+            xlabel_i.set_visible(False)
+            xlabel_i.set_fontsize(0.0)
     for l in ax[0].get_xticklabels():
         l.set_rotation(90)
     ax[0].set_ylabel("TOTAL CASES REPORTED")
@@ -56,6 +61,11 @@ def plot_summary_data(df: pd.DataFrame, workspace:str) ->None:
                 _plot_df["New cases"],
                 color="grey", marker='o', linestyle='dashed',
                 label="Cała Polska")
+    # Show label on every week
+    for idx, xlabel_i in enumerate(ax[1].axes.get_xticklabels()):
+        if idx % 7 != 0:
+            xlabel_i.set_visible(False)
+            xlabel_i.set_fontsize(0.0)
     ax[1].set_xticks(_plot_df["Date"])
     for l in ax[1].get_xticklabels():
         l.set_rotation(90)
@@ -71,6 +81,7 @@ def plot_summary_data(df: pd.DataFrame, workspace:str) ->None:
                             textcoords="offset points",
                             xytext=(0, 5), ha='center')
     # Prepare 2nd plot: NUMBER OF NEW INFECTIONS ------------------------------
+    """
     ax[2].plot( _plot_df["Date"],
                 _plot_df["New cases %"],
                 color="blue", marker='o', linestyle='dashed',
@@ -90,6 +101,7 @@ def plot_summary_data(df: pd.DataFrame, workspace:str) ->None:
                               _plot_df["New cases %"].iloc[-1]),
                             textcoords="offset points",
                             xytext=(0, 5), ha='center')
+    """
     # Save plot in a file -----------------------------------------------------
     plot_file = os.path.join(workspace, "covid19pl.png")
     fig.savefig(plot_file)
