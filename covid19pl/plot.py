@@ -29,14 +29,17 @@ def plot_summary_data(df: pd.DataFrame, workspace:str) ->None:
     # Strip data to keep only day and month value
     _plot_df["Date"] = _plot_df["Date"].map(lambda x: x[5:10:])
     _plot_df["New cases"] = _plot_df["Cała Polska"].diff()
-    _plot_df["New cases %"] = _plot_df["New cases"]/_plot_df["Cała Polska"]*100
+    _plot_df['NC_SMA_7'] = _plot_df["New cases"].rolling(window=7).mean()
+    _plot_df['NC_SMA_14'] = _plot_df["New cases"].rolling(window=14).mean()
+    _plot_df['NC_SMA_21'] = _plot_df["New cases"].rolling(window=21).mean()
+    #_plot_df["New cases %"] = _plot_df["New cases"]/_plot_df["Cała Polska"]*100
     # Prepare the plot
     fig, ax = plt.subplots(nrows=2, ncols=1, sharex=False)
     fig.set_size_inches(15,15)
     # Prepare 1st plot: TOTAL CASES REPORTED ----------------------------------
     ax[0].plot( _plot_df["Date"],
                 _plot_df["Cała Polska"],
-                color="red", marker='.', linestyle='solid',
+                color="red", marker=',', linestyle='solid',
                 label="Cała Polska")
     # Show label on every week
     for idx, xlabel_i in enumerate(ax[0].axes.get_xticklabels()):
@@ -59,8 +62,20 @@ def plot_summary_data(df: pd.DataFrame, workspace:str) ->None:
     # Prepare 2nd plot: NUMBER OF NEW INFECTIONS ------------------------------
     ax[1].plot( _plot_df["Date"],
                 _plot_df["New cases"],
-                color="grey", marker='o', linestyle='dashed',
-                label="Cała Polska")
+                color="black", marker='x', linestyle='none',
+                label="New cases")
+    ax[1].plot( _plot_df["Date"],
+                _plot_df["NC_SMA_7"],
+                color="green", marker=',', linestyle='solid',
+                label="New cases, SMA7")
+    ax[1].plot( _plot_df["Date"],
+                _plot_df["NC_SMA_14"],
+                color="orange", marker=',', linestyle='solid',
+                label="New cases, SMA14")
+    ax[1].plot( _plot_df["Date"],
+                _plot_df["NC_SMA_21"],
+                color="magenta", marker=',', linestyle='solid',
+                label="New cases, SMA21")
     # Show label on every week
     for idx, xlabel_i in enumerate(ax[1].axes.get_xticklabels()):
         if idx % 7 != 0:
@@ -80,6 +95,7 @@ def plot_summary_data(df: pd.DataFrame, workspace:str) ->None:
                               _plot_df["New cases"].iloc[-1]),
                             textcoords="offset points",
                             xytext=(0, 5), ha='center')
+
     # Prepare 2nd plot: NUMBER OF NEW INFECTIONS ------------------------------
     """
     ax[2].plot( _plot_df["Date"],

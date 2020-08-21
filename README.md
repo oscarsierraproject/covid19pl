@@ -6,6 +6,9 @@ spreads in Poland and start following the guidelines and recommendations of
 official government health authorities. 
 
 ## Changelog
+
+  - Ver. 1.6.0:  Add SMAs in new cases plot. Change plots look.
+  - Ver. 1.5.5:  Simplify X axis labels on plots
   - Ver. 1.5.4:  Fix labels precision on plots.
   - Ver. 1.5.3:  Only last data sample on plots has value caption.
   - Ver. 1.5.2:  Additional data cleaning of crawled gov.pl data.
