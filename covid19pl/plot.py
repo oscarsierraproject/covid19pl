@@ -21,7 +21,27 @@ import utils
 
 def plot_summary_data(df: pd.DataFrame, workspace:str) ->None:
     """ Create a plots showing summary of gathered data """
-
+    _plot_areas_df = df[df["Type"]=="total"]
+    _plot_areas_df = _plot_areas_df.loc[_plot_areas_df.index[-2]:
+                                        _plot_areas_df.index[-1],
+                                       [  "dolnośląskie",
+                                          "kujawsko-pomorskie",
+                                          "lubelskie",
+                                          "lubuskie",
+                                          "mazowieckie",
+                                          "małopolskie",
+                                          "opolskie",
+                                          "podkarpackie",
+                                          "podlaskie",
+                                          "pomorskie",
+                                          "warmińsko-mazurskie",
+                                          "wielkopolskie",
+                                          "zachodniopomorskie",
+                                          "łódzkie",
+                                          "śląskie",
+                                          "świętokrzyskie"]
+                                        ]
+    _plot_areas_series = _plot_areas_df.diff().iloc[-1]
     # Create data structure for all tracked provinces -------------------------
     _plot_df = df[ df["Type"]=="total"][ ["Date", "Cała Polska",] ]
     _plot_df = _plot_df.reset_index(drop=True)
@@ -34,7 +54,7 @@ def plot_summary_data(df: pd.DataFrame, workspace:str) ->None:
     _plot_df['NC_SMA_21'] = _plot_df["New cases"].rolling(window=21).mean()
     #_plot_df["New cases %"] = _plot_df["New cases"]/_plot_df["Cała Polska"]*100
     # Prepare the plot
-    fig, ax = plt.subplots(nrows=2, ncols=1, sharex=False)
+    fig, ax = plt.subplots(nrows=3, ncols=1, sharex=False)
     fig.set_size_inches(15,15)
     # Prepare 1st plot: TOTAL CASES REPORTED ----------------------------------
     ax[0].plot( _plot_df["Date"],
@@ -97,27 +117,22 @@ def plot_summary_data(df: pd.DataFrame, workspace:str) ->None:
                             xytext=(0, 5), ha='center')
 
     # Prepare 2nd plot: NUMBER OF NEW INFECTIONS ------------------------------
-    """
-    ax[2].plot( _plot_df["Date"],
-                _plot_df["New cases %"],
-                color="blue", marker='o', linestyle='dashed',
-                label="Cała Polska")
-    ax[2].set_xticks(_plot_df["Date"])
+    ax[2].plot( _plot_areas_series,
+                color="purple", marker='1', linestyle='none',
+                label="New cases on {}".format(_plot_df["Date"].iloc[-1]))
+    ax[2].set_xticks(_plot_areas_series.index)
     for l in ax[2].get_xticklabels():
         l.set_rotation(90)
-    ax[2].set_ylabel("NEW INFECTIONS / TOTAL INFECTIONS * 100")
+    ax[2].set_ylabel("NEW INFECTIONS")
     ax[2].set_xlim(xmin=0)
     ax[2].set_ylim(ymin=0)
-    ax[2].set_ylim(ymax=110)
     ax[2].set_title("")
     ax[2].grid(b=True, which="both", axis="both", linestyle='dotted')
     ax[2].legend()
-    ax[2].annotate ("%.1f"% _plot_df["New cases %"].iloc[-1],
-                            ( _plot_df["Date"].iloc[-1],
-                              _plot_df["New cases %"].iloc[-1]),
-                            textcoords="offset points",
-                            xytext=(0, 5), ha='center')
-    """
+    for x, y in enumerate(_plot_areas_series.values):
+        ax[2].annotate ("%d"% y, (x, y),
+                                textcoords="offset points",
+                                xytext=(0, 5), ha='center')
     # Save plot in a file -----------------------------------------------------
     plot_file = os.path.join(workspace, "covid19pl.png")
     fig.savefig(plot_file)
