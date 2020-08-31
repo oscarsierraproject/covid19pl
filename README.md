@@ -8,7 +8,7 @@ official government health authorities.
 ## Samples
 
 ### Sample plot
-[![covid19pl](https://user-images.githubusercontent.com/48877800/90922346-23c32500-e3ec-11ea-939c-560d3a56cae1.png)](url)
+[![covid19pl](https://oscarsierraproject.eu/static/graphics/covid19pl.png)](url)
 
 ### Sample usage
 To run the script with gathering, displaying and plotting data use:
