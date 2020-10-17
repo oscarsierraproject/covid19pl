@@ -1,0 +1,286 @@
+{
+  "_type": "LocationsLibrary",
+  "_version": "1.0.0",
+  "value": {
+    "VERSION": "1.0.0",
+    "date": {
+      "_type": "datetime",
+      "_format": "%Y-%m-%d %H:%M:%S",
+      "value": "2020-10-17 23:55:01"
+    },
+    "items": [
+      {
+        "_type": "LocationEntity",
+        "_version": "1.0.0",
+        "value": {
+          "province": "Ca\u0142a Polska",
+          "total": 167230,
+          "dead": 3524,
+          "recovered": 0,
+          "date": {
+            "_type": "datetime",
+            "_format": "%Y-%m-%d %H:%M:%S",
+            "value": "2020-10-17 23:55:01"
+          },
+          "VERSION": "1.0.0"
+        }
+      },
+      {
+        "_type": "LocationEntity",
+        "_version": "1.0.0",
+        "value": {
+          "province": "dolno\u015bl\u0105skie",
+          "total": 9035,
+          "dead": 217,
+          "recovered": 0,
+          "date": {
+            "_type": "datetime",
+            "_format": "%Y-%m-%d %H:%M:%S",
+            "value": "2020-10-17 23:55:01"
+          },
+          "VERSION": "1.0.0"
+        }
+      },
+      {
+        "_type": "LocationEntity",
+        "_version": "1.0.0",
+        "value": {
+          "province": "kujawsko-pomorskie",
+          "total": 7405,
+          "dead": 114,
+          "recovered": 0,
+          "date": {
+            "_type": "datetime",
+            "_format": "%Y-%m-%d %H:%M:%S",
+            "value": "2020-10-17 23:55:01"
+          },
+          "VERSION": "1.0.0"
+        }
+      },
+      {
+        "_type": "LocationEntity",
+        "_version": "1.0.0",
+        "value": {
+          "province": "lubelskie",
+          "total": 6287,
+          "dead": 112,
+          "recovered": 0,
+          "date": {
+            "_type": "datetime",
+            "_format": "%Y-%m-%d %H:%M:%S",
+            "value": "2020-10-17 23:55:01"
+          },
+          "VERSION": "1.0.0"
+        }
+      },
+      {
+        "_type": "LocationEntity",
+        "_version": "1.0.0",
+        "value": {
+          "province": "lubuskie",
+          "total": 2420,
+          "dead": 31,
+          "recovered": 0,
+          "date": {
+            "_type": "datetime",
+            "_format": "%Y-%m-%d %H:%M:%S",
+            "value": "2020-10-17 23:55:01"
+          },
+          "VERSION": "1.0.0"
+        }
+      },
+      {
+        "_type": "LocationEntity",
+        "_version": "1.0.0",
+        "value": {
+          "province": "mazowieckie",
+          "total": 23127,
+          "dead": 535,
+          "recovered": 0,
+          "date": {
+            "_type": "datetime",
+            "_format": "%Y-%m-%d %H:%M:%S",
+            "value": "2020-10-17 23:55:01"
+          },
+          "VERSION": "1.0.0"
+        }
+      },
+      {
+        "_type": "LocationEntity",
+        "_version": "1.0.0",
+        "value": {
+          "province": "ma\u0142opolskie",
+          "total": 22075,
+          "dead": 321,
+          "recovered": 0,
+          "date": {
+            "_type": "datetime",
+            "_format": "%Y-%m-%d %H:%M:%S",
+            "value": "2020-10-17 23:55:01"
+          },
+          "VERSION": "1.0.0"
+        }
+      },
+      {
+        "_type": "LocationEntity",
+        "_version": "1.0.0",
+        "value": {
+          "province": "opolskie",
+          "total": 4569,
+          "dead": 115,
+          "recovered": 0,
+          "date": {
+            "_type": "datetime",
+            "_format": "%Y-%m-%d %H:%M:%S",
+            "value": "2020-10-17 23:55:01"
+          },
+          "VERSION": "1.0.0"
+        }
+      },
+      {
+        "_type": "LocationEntity",
+        "_version": "1.0.0",
+        "value": {
+          "province": "podkarpackie",
+          "total": 8929,
+          "dead": 234,
+          "recovered": 0,
+          "date": {
+            "_type": "datetime",
+            "_format": "%Y-%m-%d %H:%M:%S",
+            "value": "2020-10-17 23:55:01"
+          },
+          "VERSION": "1.0.0"
+        }
+      },
+      {
+        "_type": "LocationEntity",
+        "_version": "1.0.0",
+        "value": {
+          "province": "podlaskie",
+          "total": 4106,
+          "dead": 82,
+          "recovered": 0,
+          "date": {
+            "_type": "datetime",
+            "_format": "%Y-%m-%d %H:%M:%S",
+            "value": "2020-10-17 23:55:01"
+          },
+          "VERSION": "1.0.0"
+        }
+      },
+      {
+        "_type": "LocationEntity",
+        "_version": "1.0.0",
+        "value": {
+          "province": "pomorskie",
+          "total": 10327,
+          "dead": 168,
+          "recovered": 0,
+          "date": {
+            "_type": "datetime",
+            "_format": "%Y-%m-%d %H:%M:%S",
+            "value": "2020-10-17 23:55:01"
+          },
+          "VERSION": "1.0.0"
+        }
+      },
+      {
+        "_type": "LocationEntity",
+        "_version": "1.0.0",
+        "value": {
+          "province": "warmi\u0144sko-mazurskie",
+          "total": 3511,
+          "dead": 49,
+          "recovered": 0,
+          "date": {
+            "_type": "datetime",
+            "_format": "%Y-%m-%d %H:%M:%S",
+            "value": "2020-10-17 23:55:01"
+          },
+          "VERSION": "1.0.0"
+        }
+      },
+      {
+        "_type": "LocationEntity",
+        "_version": "1.0.0",
+        "value": {
+          "province": "wielkopolskie",
+          "total": 14639,
+          "dead": 415,
+          "recovered": 0,
+          "date": {
+            "_type": "datetime",
+            "_format": "%Y-%m-%d %H:%M:%S",
+            "value": "2020-10-17 23:55:01"
+          },
+          "VERSION": "1.0.0"
+        }
+      },
+      {
+        "_type": "LocationEntity",
+        "_version": "1.0.0",
+        "value": {
+          "province": "zachodniopomorskie",
+          "total": 4224,
+          "dead": 47,
+          "recovered": 0,
+          "date": {
+            "_type": "datetime",
+            "_format": "%Y-%m-%d %H:%M:%S",
+            "value": "2020-10-17 23:55:01"
+          },
+          "VERSION": "1.0.0"
+        }
+      },
+      {
+        "_type": "LocationEntity",
+        "_version": "1.0.0",
+        "value": {
+          "province": "\u0142\u00f3dzkie",
+          "total": 12416,
+          "dead": 323,
+          "recovered": 0,
+          "date": {
+            "_type": "datetime",
+            "_format": "%Y-%m-%d %H:%M:%S",
+            "value": "2020-10-17 23:55:01"
+          },
+          "VERSION": "1.0.0"
+        }
+      },
+      {
+        "_type": "LocationEntity",
+        "_version": "1.0.0",
+        "value": {
+          "province": "\u015bl\u0105skie",
+          "total": 29126,
+          "dead": 659,
+          "recovered": 0,
+          "date": {
+            "_type": "datetime",
+            "_format": "%Y-%m-%d %H:%M:%S",
+            "value": "2020-10-17 23:55:01"
+          },
+          "VERSION": "1.0.0"
+        }
+      },
+      {
+        "_type": "LocationEntity",
+        "_version": "1.0.0",
+        "value": {
+          "province": "\u015bwi\u0119tokrzyskie",
+          "total": 5034,
+          "dead": 102,
+          "recovered": 0,
+          "date": {
+            "_type": "datetime",
+            "_format": "%Y-%m-%d %H:%M:%S",
+            "value": "2020-10-17 23:55:01"
+          },
+          "VERSION": "1.0.0"
+        }
+      }
+    ]
+  }
+}
