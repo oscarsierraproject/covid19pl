@@ -8,7 +8,7 @@ official government health authorities.
 ## Samples
 
 ### Sample plot
-[![covid19pl](https://user-images.githubusercontent.com/48877800/91895874-39600680-ec98-11ea-8804-7ff2dd396d4d.png)
+[![covid19pl](https://user-images.githubusercontent.com/48877800/98136851-a757c280-1ec1-11eb-9e18-4fe85da02684.png)
 ](url)
 
 ### Sample usage
