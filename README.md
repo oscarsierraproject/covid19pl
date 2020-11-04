@@ -47,6 +47,7 @@ TIMESTAMP OF SAMPLES 2020-03-22 17:57:48
 
 ## Changelog
 
+  - Ver. 1.8.0:  Plot number of cases pre 100k citizens with tresholds.
   - Ver. 1.7.0:  Plot extended with actual number of new cases in provinces.
   - Ver. 1.6.0:  Add SMAs in new cases plot. Change plots look.
   - Ver. 1.5.5:  Simplify X axis labels on plots
