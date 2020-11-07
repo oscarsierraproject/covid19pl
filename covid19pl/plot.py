@@ -97,8 +97,8 @@ def plot_summary_data(df: pd.DataFrame, workspace:str) ->None:
     ax[0].axhspan(0, 10, facecolor='green', alpha=0.5)
     ax[0].axhspan(10, 25, facecolor='yellow', alpha=0.5)
     ax[0].axhspan(25, 50, facecolor='red', alpha=0.5)
-    ax[0].axhspan(50, 75, facecolor='violet', alpha=0.5)
-    ax[0].axhspan(75, 150, facecolor='grey', alpha=0.5)
+    ax[0].axhspan(50, 70, facecolor='violet', alpha=0.5)
+    ax[0].axhspan(70, 150, facecolor='grey', alpha=0.5)
     # Prepare 2nd plot: TOTAL CASES REPORTED ----------------------------------
     ax[1].plot( _plot_df["Date"],
                 _plot_df["Cała Polska"],
