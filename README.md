@@ -47,16 +47,17 @@ TIMESTAMP OF SAMPLES 2020-03-22 17:57:48
 
 ### Help
 
+```bash
         Welcome to covid19pl/covid19pl.py in version 1.9.0
         Published on GNU General Public License 3.0 by oscarsierraproject.eu
         Copyright 2020, oscarsierraproject.eu
         GitHub: https://github.com/oscarsierraproject/covid19pl
 
-Usage: covid19pl.py --workspace=<PATH>
+  Usage: covid19pl.py --workspace=<PATH>
 
-Options:
-  --version             show program's version number and exit
-  -h, --help            show this help message and exit
+  Options:
+    --version             show program's version number and exit
+    -h, --help            show this help message and exit
 
   OPTIONAL OPTIONS:
     --debug             Run script in debug mode
@@ -73,8 +74,8 @@ Options:
                         path to directory with data [default:
                         /home/sebastian/repo/covid19pl/covid19pl/data]
 
-Copyright 2020, oscarsierraproject.eu, GNU General Public License 3.0
-
+  Copyright 2020, oscarsierraproject.eu, GNU General Public License 3.0
+```
 
 ## Changelog
 
