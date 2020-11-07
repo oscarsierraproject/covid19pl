@@ -4,7 +4,7 @@
 __author__      = "oscarsierraproject.eu"
 __copyright__   = "Copyright 2020, oscarsierraproject.eu"
 __license__     = "GNU General Public License 3.0"
-__date__        = "26th March 2020"
+__date__        = "7th November 2020"
 __maintainer__  = "oscarsierraproject.eu"
 __email__       = "oscarsierraproject@protonmail.com"
 __status__      = "Development"
@@ -15,11 +15,16 @@ import optparse
 import os
 
 from crawler import Covid19DataCrawler
+import datetime
 from entities import LocationEntity, LocationsLibrary
 from history import Covid19HistoryContainer
 import plot
 import utils
 from __version__ import __version__
+
+
+DATE_FORMAT = "%Y-%m-%d"
+TIME_FORMAT = "%H:%M:%S"
 
 
 # Introduction string ----------------------------------------------------------
@@ -56,6 +61,9 @@ def parse_options():
                         help="Gather latest data from gov.pl")
     group.add_option(  "--plot", action="store_true", dest="plot",
                         help="Create a plots from gathered data")
+    group.add_option(  "--plot_from_date", action="store", dest="plot_from_date",
+                        help="Create a plots starting from date YYYY-MM-DD",
+                        default="2020-03-03")
     group.add_option(  "--save_csv", action="store_true", dest="save_csv",
                         help="Save collected data in UTF-8 CSV file")
     group.add_option(  "--workspace", action="store",
@@ -97,7 +105,29 @@ if __name__ == "__main__":
     if options.recipient:
         covid19_history.send_summary_email( options.recipient )
     if options.plot:
-        plot.plot_summary_data( covid19_history.to_dataframe(), 
+        
+        data = covid19_history.to_dataframe()
+       
+        # Validate provided date format and range
+        last_date_str = data["Date"].iloc[-1].split(" ")[0] # First from retrieved tuple
+        search_date_obj = datetime.datetime.strptime(options.plot_from_date, 
+                                                     DATE_FORMAT )\
+                                           .date()
+        if search_date_obj < datetime.date(2020, 3, 3) or\
+            search_date_obj > datetime.datetime.strptime(last_date_str, 
+                                                         DATE_FORMAT)\
+                                               .date():
+            raise ValueError(f"Valid date range 2020-03-03...{last_date_str}")
+
+        # Search for first index matching provided date
+        start_index = 0
+        search_date_str = str(search_date_obj)
+        for index, row in data.iterrows():
+            if search_date_str in row["Date"]:
+                start_index = index
+                break
+        plot.plot_summary_data( data[start_index::], 
                                 options.workspace)
+
     if options.save_csv:
         covid19_history.to_csv()

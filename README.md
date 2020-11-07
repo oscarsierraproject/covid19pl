@@ -3,7 +3,7 @@ Collector of Polish data on the number of cases of COVID19 disease caused by the
 SARS-CoV-2 virus. Information chaos can be tiring. Insulate yourself from him
 and stay in touch with relevant information on demand. Take a look how disease
 spreads in Poland and start following the guidelines and recommendations of
-official government health authorities. 
+official government health authorities.
 
 ## Samples
 
@@ -45,9 +45,41 @@ zachodniopomorskie  :      10       0       0                1       0       0
 TIMESTAMP OF SAMPLES 2020-03-22 17:57:48
 ```
 
+### Help
+
+        Welcome to covid19pl/covid19pl.py in version 1.9.0
+        Published on GNU General Public License 3.0 by oscarsierraproject.eu
+        Copyright 2020, oscarsierraproject.eu
+        GitHub: https://github.com/oscarsierraproject/covid19pl
+
+Usage: covid19pl.py --workspace=<PATH>
+
+Options:
+  --version             show program's version number and exit
+  -h, --help            show this help message and exit
+
+  OPTIONAL OPTIONS:
+    --debug             Run script in debug mode
+    --display           Display latest data for Poland
+    --email=RECIPIENT   email address to send summary
+    --env=ENV           path to file with variables [default:
+                        /home/sebastian/repo/covid19pl/covid19pl/.env]
+    --gather            Gather latest data from gov.pl
+    --plot              Create a plots from gathered data
+    --plot_from_date=PLOT_FROM_DATE
+                        Create a plots starting from date YYYY-MM-DD
+    --save_csv          Save collected data in UTF-8 CSV file
+    --workspace=WORKSPACE
+                        path to directory with data [default:
+                        /home/sebastian/repo/covid19pl/covid19pl/data]
+
+Copyright 2020, oscarsierraproject.eu, GNU General Public License 3.0
+
+
 ## Changelog
 
-  - Ver. 1.8.0:  Plot number of cases pre 100k citizens with tresholds.
+  - Ver. 1.9.0:  Add option to specify plots starting date.
+  - Ver. 1.8.0:  Plot number of cases pre 100k citizens with thresholds.
   - Ver. 1.7.0:  Plot extended with actual number of new cases in provinces.
   - Ver. 1.6.0:  Add SMAs in new cases plot. Change plots look.
   - Ver. 1.5.5:  Simplify X axis labels on plots
@@ -64,7 +96,7 @@ TIMESTAMP OF SAMPLES 2020-03-22 17:57:48
   - Ver. 1.4.1:  Small corrections in the code
   - Ver. 1.4.0:  Split project into multiple files
   - Ver. 1.3.0:  Add plot with total cases in Poland
-  - Ver. 1.2.0:  Add email reports with 
+  - Ver. 1.2.0:  Add email reports with
   - Ver. 1.1.0:  Remove **mandatory** options, add default path to
                  workspace direcotry containing COVID19 data
   - Ver. 1.0.0:  Initial script version
@@ -87,11 +119,11 @@ export EMAIL_SMTP_SRV_PORT=587
 export EMAIL_SMTP_SRV_LOGIN="SOME_GMAIL_ADDRESS@gmail.com"
 export EMAIL_SMTP_SRV_PASSWORD="SECRET PASSWORD"
 ```
-Using Google SMTP servers may require enable less secure apps to access 
+Using Google SMTP servers may require enable less secure apps to access
 gmail accounts.
 
 ## How to use the script
 In order to get help please go to the directory with **covid19pl.py** file and
 execute **python ./covid19pl.py --help** command. Keep in mind that at before
-you do that all packages listed in **requirements.txt** files should be 
+you do that all packages listed in **requirements.txt** files should be
 installed either in your system globally, or in virtual environment.
