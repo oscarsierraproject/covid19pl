@@ -23,12 +23,15 @@ class BaseEntity():
 class LocationEntity(BaseEntity):
     """ Class holding single SARS-CoV-2 province data """
 
-    province:   str
-    total:      int = 0
-    dead:       int = 0
-    recovered:  int = 0
-    date:       datetime = datetime.now()
-    VERSION:    str = "1.0.0" # Required for encoding/decoding
+    province:       str
+    total:          int = 0
+    total_per_10k:  float = 0 # Field added 24.11.2020
+    dead:           int = 0
+    recovered:      int = 0 
+    dead_by_covid:  int = 0 # Field added 24.11.2020
+    dead_with_covid:int = 0 # Field added 24.11.2020
+    date: datetime      = datetime.now()
+    VERSION:    str = "1.1.0" # Required for encoding/decoding
 
     def __eq__(self, other: object) -> bool:
         if not isinstance(other, LocationEntity):

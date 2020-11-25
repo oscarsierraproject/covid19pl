@@ -71,11 +71,29 @@ class Covid19DataCrawler(object):
             """
             if "https" in data["Województwo"] or data["Województwo"] == "":
                 continue
-            l = LocationEntity( province = data['Województwo'],
-                                total    = int(data['Liczba'].replace(" ","")),
-                                dead     = int(data['Liczba zgonów'].replace(" ",""))\
-                                           if data['Liczba zgonów'] != ''\
-                                           else 0)
+            if datetime.now() < datetime(2020, 11, 24):
+                l = LocationEntity( province = data['Województwo'],
+                                    total    = int(data['Liczba'].replace(" ","")),
+                                    dead     = int(data['Liczba zgonów'].replace(" ",""))\
+                                               if data['Liczba zgonów'] != ''\
+                                               else 0,
+                                    VERSION  = "1.0.0")
+            elif datetime.now() >= datetime(2020, 11, 24):
+                l = LocationEntity( province = data['Województwo'],
+                                    total    = int(data['Liczba'].replace(" ","")),
+                                    total_per_10k = float(data['Liczba na 10 tys. mieszkańców']\
+                                                            .replace(",",".")\
+                                                            .replace(" ","")),
+                                    dead     = int(data['Wszystkie przypadki śmiertelne'].replace(" ",""))\
+                                               if data['Wszystkie przypadki śmiertelne'] != ''\
+                                               else 0,
+                                    dead_by_covid = int(data['Przypadki śmiertelne w wyniku Covid'].replace(" ",""))\
+                                               if data['Przypadki śmiertelne w wyniku Covid'] != ''\
+                                               else 0,
+                                    dead_with_covid = int(data['Przypadki śmiertelne w wyniku chorób współistniejących'].replace(" ",""))\
+                                               if data['Przypadki śmiertelne w wyniku chorób współistniejących'] != ''\
+                                               else 0,
+                                    VERSION  = "1.1.0")
             library.items.append(l)
         library.items = sorted(library.items)
         self.logger.debug("Gathering Polish COVID19 data complete")

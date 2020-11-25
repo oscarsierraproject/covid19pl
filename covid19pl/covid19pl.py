@@ -77,6 +77,13 @@ def parse_options():
     if not options.workspace or not os.path.isdir(options.workspace):
         parser.error("Data directory does not exist or was not provided.\n\n"\
                      "See --help for more details.")
+    ''' 
+    @TODO: Disabled due to bug in new data processing. On 24-11-2020
+    data on gov.pl site has been presented in a different way. Until support
+    for new data handling will be implemented some options will not work
+    '''
+    options.display = False
+    options.plot = False
     return options
 # ------------------------------------------------------------------------------
 
