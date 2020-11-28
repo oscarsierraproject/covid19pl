@@ -19,7 +19,7 @@ class BaseEntity():
                                 # content may impact JSON handlers.
 
 
-@dataclass(frozen=True)
+@dataclass(frozen=False)
 class LocationEntity(BaseEntity):
     """ Class holding single SARS-CoV-2 province data """
 
@@ -27,10 +27,18 @@ class LocationEntity(BaseEntity):
     total:          int = 0
     total_per_10k:  float = 0 # Field added 24.11.2020
     dead:           int = 0
-    recovered:      int = 0 
+    recovered:      int = 0
     dead_by_covid:  int = 0 # Field added 24.11.2020
     dead_with_covid:int = 0 # Field added 24.11.2020
     date: datetime      = datetime.now()
+    """ On November 24rd 2020 government changed the way how data is served.
+    New fields were introduced as well as the meaning of fields changed.
+    Version 1.0.0: Data from 03.03.2020 - 24.11.2020
+                   All values shows total number of cases.
+    Version 1.1.0: Data from 24.11.2020 - until now
+                   All values shows daily delta of new cases
+                   New fields introduced.
+    """
     VERSION:    str = "1.1.0" # Required for encoding/decoding
 
     def __eq__(self, other: object) -> bool:
