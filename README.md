@@ -79,6 +79,8 @@ TIMESTAMP OF SAMPLES 2020-03-22 17:57:48
 
 ## Changelog
 
+  - Ver. 1.10.1: Support new data format introduced on November 24, 2020 on
+    source, GOV.PL, site.
   - Ver. 1.9.1:  Fix "grey" zone (national quarantine) start point to 70.
   - Ver. 1.9.0:  Add option to specify plots starting date.
   - Ver. 1.8.0:  Plot number of cases pre 100k citizens with thresholds.
