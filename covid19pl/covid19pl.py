@@ -77,13 +77,6 @@ def parse_options():
     if not options.workspace or not os.path.isdir(options.workspace):
         parser.error("Data directory does not exist or was not provided.\n\n"\
                      "See --help for more details.")
-    ''' 
-    @TODO: Disabled due to bug in new data processing. On 24-11-2020
-    data on gov.pl site has been presented in a different way. Until support
-    for new data handling will be implemented some options will not work
-    '''
-    options.display = False
-    options.plot = False
     return options
 # ------------------------------------------------------------------------------
 
@@ -91,50 +84,58 @@ if __name__ == "__main__":
     intro()
     root_logger = utils.setup_root_logger()
     options     = parse_options()
+
     # Proper order of options handling: debug -> env -> gather -> display
     if options.debug:
         # Drop down logging level to DEBUG for all handlers
         root_logger.setLevel(logging.DEBUG)
         for h in root_logger.handlers:
             h.setLevel(logging.DEBUG)
+
     if options.recipient and options.env:
         root_logger.info("Loading environment variables from %s"%\
                          (options.env,) )
         utils.load_env_variables( options.env)
+
     if options.gather:
         # Gather latest data from www.gov.pl
         covid19_web_crawler = Covid19DataCrawler()
         covid19_web_crawler.save_data_in_file( options.workspace )
+
+    # Load data and prepare it for further analysis
     covid19_history = Covid19HistoryContainer()
     covid19_history.load_data_from_files( options.workspace )
-    if options.display:
-        covid19_history.print_summary_data()
-    if options.recipient:
-        covid19_history.send_summary_email( options.recipient )
-    if options.plot:
-        
-        data = covid19_history.to_dataframe()
-       
-        # Validate provided date format and range
-        last_date_str = data["Date"].iloc[-1].split(" ")[0] # First from retrieved tuple
-        search_date_obj = datetime.datetime.strptime(options.plot_from_date, 
-                                                     DATE_FORMAT )\
-                                           .date()
-        if search_date_obj < datetime.date(2020, 3, 3) or\
-            search_date_obj > datetime.datetime.strptime(last_date_str, 
-                                                         DATE_FORMAT)\
-                                               .date():
-            raise ValueError(f"Valid date range 2020-03-03...{last_date_str}")
-
-        # Search for first index matching provided date
-        start_index = 0
-        search_date_str = str(search_date_obj)
-        for index, row in data.iterrows():
-            if search_date_str in row["Date"]:
-                start_index = index
-                break
-        plot.plot_summary_data( data[start_index::], 
-                                options.workspace)
 
     if options.save_csv:
         covid19_history.to_csv()
+
+    if options.display:
+        data = covid19_history.get_data_to_analyse()
+        utils.display_todays_stats_for_all_locations(data)
+
+    if options.recipient:
+        data = covid19_history.get_data_to_analyse()
+        utils.send_summary_email( options.recipient, data )
+
+    if options.plot:
+        data = covid19_history.get_data_to_analyse()
+
+        # Validate provided date format and range
+        last_date = data["POLSKA"]["date"].iloc[-1]
+        search_date = datetime.datetime\
+                              .strptime(options.plot_from_date, DATE_FORMAT)\
+                              .date()
+        if search_date < datetime.date(2020, 3, 3) or search_date > last_date:
+            raise ValueError(f"Valid date range 2020-03-03...{last_date}")
+
+        # Search for first index with provided date
+        start_index = data["POLSKA"]\
+                        .index[data["POLSKA"]["date"] == search_date]\
+                        .to_list()[0]
+
+        # Trim data to selected range
+        for loc, values in data.items():
+            data[loc] = values[start_index::]
+
+        plot.plot_summary_data( data, options.workspace)
+

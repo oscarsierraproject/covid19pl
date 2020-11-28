@@ -65,9 +65,16 @@ class Covid19DataCrawler(object):
                                                           .replace("'", "\""))
         _parsed_data = json.loads(_reg_data['parsedData'])
         for data in _parsed_data:
-            """ On March 23rd 2020 there was an issue with data on gov.pl
-            website. Empty records with no data were added, as well as some 
-            strange links. If bellow was introduced to deal with corrupted data
+            """
+            FIX: On March 23rd 2020 there was an issue with data on gov.pl
+                website. Empty records with no data were added, as well as some
+                strange links. If bellow was introduced to deal with corrupted
+                data.
+
+            FIX: On November 24rd 2020 government changed the way how data is
+                displayed. New fields were introduced as well as the meaning
+                of fields changed. For example field 'Liczba' now means daily
+                number of new cases instead of total number of COVID cases.
             """
             if "https" in data["Województwo"] or data["Województwo"] == "":
                 continue
@@ -79,21 +86,22 @@ class Covid19DataCrawler(object):
                                                else 0,
                                     VERSION  = "1.0.0")
             elif datetime.now() >= datetime(2020, 11, 24):
-                l = LocationEntity( province = data['Województwo'],
-                                    total    = int(data['Liczba'].replace(" ","")),
-                                    total_per_10k = float(data['Liczba na 10 tys. mieszkańców']\
-                                                            .replace(",",".")\
-                                                            .replace(" ","")),
-                                    dead     = int(data['Wszystkie przypadki śmiertelne'].replace(" ",""))\
-                                               if data['Wszystkie przypadki śmiertelne'] != ''\
-                                               else 0,
-                                    dead_by_covid = int(data['Przypadki śmiertelne w wyniku Covid'].replace(" ",""))\
-                                               if data['Przypadki śmiertelne w wyniku Covid'] != ''\
-                                               else 0,
-                                    dead_with_covid = int(data['Przypadki śmiertelne w wyniku chorób współistniejących'].replace(" ",""))\
-                                               if data['Przypadki śmiertelne w wyniku chorób współistniejących'] != ''\
-                                               else 0,
-                                    VERSION  = "1.1.0")
+                l = LocationEntity(
+                        province = data['Województwo'],
+                        total    = int(data['Liczba'].replace(" ","")),
+                        total_per_10k = float(data['Liczba na 10 tys. mieszkańców']\
+                                                .replace(",",".")\
+                                                .replace(" ","")),
+                        dead     = int(data['Wszystkie przypadki śmiertelne'].replace(" ",""))\
+                                   if data['Wszystkie przypadki śmiertelne'] != ''\
+                                   else 0,
+                        dead_by_covid = int(data['Przypadki śmiertelne w wyniku Covid'].replace(" ",""))\
+                                   if data['Przypadki śmiertelne w wyniku Covid'] != ''\
+                                   else 0,
+                        dead_with_covid = int(data['Przypadki śmiertelne w wyniku chorób współistniejących'].replace(" ",""))\
+                                   if data['Przypadki śmiertelne w wyniku chorób współistniejących'] != ''\
+                                   else 0,
+                        VERSION  = "1.1.0")
             library.items.append(l)
         library.items = sorted(library.items)
         self.logger.debug("Gathering Polish COVID19 data complete")

@@ -31,15 +31,19 @@ class CovidJsonDecoder(json.JSONDecoder):
             return LocationsLibrary(items=obj["value"]["items"],
                                     date=obj["value"]["date"],
                                     VERSION=obj["value"]["VERSION"])
-            raise NotImplementedError
         elif obj["_type"] == "LocationEntity":
-            return LocationEntity(  province=obj["value"]["province"],
-                                    total=int( obj["value"]["total"]),
-                                    dead=int( obj["value"]["dead"]),
+            # Create default 1.0.0 version object
+            entity = LocationEntity(province=obj["value"]["province"],
+                                    total=int(obj["value"]["total"]),
+                                    dead=int(obj["value"]["dead"]),
                                     recovered=int( obj["value"]["recovered"] ),
                                     date=obj["value"]["date"],
                                     VERSION=obj["value"]["VERSION"])
-            raise NotImplementedError
+            if entity.VERSION == "1.1.0":
+                entity.total_per_10k=float(obj["value"]["total_per_10k"])
+                entity.dead_by_covid=int(obj["value"]["dead_by_covid"])
+                entity.dead_with_covid=int(obj["value"]["dead_with_covid"])
+            return entity
         elif obj["_type"] == "datetime":
             return datetime.strptime( obj['value'], obj['_format'] )
         else:
