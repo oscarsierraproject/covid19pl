@@ -1,0 +1,337 @@
+{
+  "_type": "LocationsLibrary",
+  "_version": "1.0.0",
+  "value": {
+    "VERSION": "1.0.0",
+    "date": {
+      "_type": "datetime",
+      "_format": "%Y-%m-%d %H:%M:%S",
+      "value": "2020-12-31 23:55:01"
+    },
+    "items": [
+      {
+        "_type": "LocationEntity",
+        "_version": "1.1.0",
+        "value": {
+          "province": "Ca\u0142y kraj",
+          "total": 13397,
+          "total_per_10k": 3.49,
+          "dead": 532,
+          "recovered": 0,
+          "dead_by_covid": 104,
+          "dead_with_covid": 428,
+          "date": {
+            "_type": "datetime",
+            "_format": "%Y-%m-%d %H:%M:%S",
+            "value": "2020-12-31 23:55:01"
+          },
+          "VERSION": "1.1.0"
+        }
+      },
+      {
+        "_type": "LocationEntity",
+        "_version": "1.1.0",
+        "value": {
+          "province": "dolno\u015bl\u0105skie",
+          "total": 804,
+          "total_per_10k": 2.77,
+          "dead": 23,
+          "recovered": 0,
+          "dead_by_covid": 5,
+          "dead_with_covid": 18,
+          "date": {
+            "_type": "datetime",
+            "_format": "%Y-%m-%d %H:%M:%S",
+            "value": "2020-12-31 23:55:01"
+          },
+          "VERSION": "1.1.0"
+        }
+      },
+      {
+        "_type": "LocationEntity",
+        "_version": "1.1.0",
+        "value": {
+          "province": "kujawsko-pomorskie",
+          "total": 1517,
+          "total_per_10k": 7.33,
+          "dead": 47,
+          "recovered": 0,
+          "dead_by_covid": 9,
+          "dead_with_covid": 38,
+          "date": {
+            "_type": "datetime",
+            "_format": "%Y-%m-%d %H:%M:%S",
+            "value": "2020-12-31 23:55:01"
+          },
+          "VERSION": "1.1.0"
+        }
+      },
+      {
+        "_type": "LocationEntity",
+        "_version": "1.1.0",
+        "value": {
+          "province": "lubelskie",
+          "total": 564,
+          "total_per_10k": 2.68,
+          "dead": 30,
+          "recovered": 0,
+          "dead_by_covid": 4,
+          "dead_with_covid": 26,
+          "date": {
+            "_type": "datetime",
+            "_format": "%Y-%m-%d %H:%M:%S",
+            "value": "2020-12-31 23:55:01"
+          },
+          "VERSION": "1.1.0"
+        }
+      },
+      {
+        "_type": "LocationEntity",
+        "_version": "1.1.0",
+        "value": {
+          "province": "lubuskie",
+          "total": 493,
+          "total_per_10k": 4.88,
+          "dead": 15,
+          "recovered": 0,
+          "dead_by_covid": 12,
+          "dead_with_covid": 3,
+          "date": {
+            "_type": "datetime",
+            "_format": "%Y-%m-%d %H:%M:%S",
+            "value": "2020-12-31 23:55:01"
+          },
+          "VERSION": "1.1.0"
+        }
+      },
+      {
+        "_type": "LocationEntity",
+        "_version": "1.1.0",
+        "value": {
+          "province": "mazowieckie",
+          "total": 1739,
+          "total_per_10k": 3.2,
+          "dead": 68,
+          "recovered": 0,
+          "dead_by_covid": 20,
+          "dead_with_covid": 48,
+          "date": {
+            "_type": "datetime",
+            "_format": "%Y-%m-%d %H:%M:%S",
+            "value": "2020-12-31 23:55:01"
+          },
+          "VERSION": "1.1.0"
+        }
+      },
+      {
+        "_type": "LocationEntity",
+        "_version": "1.1.0",
+        "value": {
+          "province": "ma\u0142opolskie",
+          "total": 387,
+          "total_per_10k": 1.13,
+          "dead": 18,
+          "recovered": 0,
+          "dead_by_covid": 6,
+          "dead_with_covid": 12,
+          "date": {
+            "_type": "datetime",
+            "_format": "%Y-%m-%d %H:%M:%S",
+            "value": "2020-12-31 23:55:01"
+          },
+          "VERSION": "1.1.0"
+        }
+      },
+      {
+        "_type": "LocationEntity",
+        "_version": "1.1.0",
+        "value": {
+          "province": "opolskie",
+          "total": 347,
+          "total_per_10k": 3.54,
+          "dead": 20,
+          "recovered": 0,
+          "dead_by_covid": 1,
+          "dead_with_covid": 19,
+          "date": {
+            "_type": "datetime",
+            "_format": "%Y-%m-%d %H:%M:%S",
+            "value": "2020-12-31 23:55:01"
+          },
+          "VERSION": "1.1.0"
+        }
+      },
+      {
+        "_type": "LocationEntity",
+        "_version": "1.1.0",
+        "value": {
+          "province": "podkarpackie",
+          "total": 284,
+          "total_per_10k": 1.34,
+          "dead": 17,
+          "recovered": 0,
+          "dead_by_covid": 1,
+          "dead_with_covid": 16,
+          "date": {
+            "_type": "datetime",
+            "_format": "%Y-%m-%d %H:%M:%S",
+            "value": "2020-12-31 23:55:01"
+          },
+          "VERSION": "1.1.0"
+        }
+      },
+      {
+        "_type": "LocationEntity",
+        "_version": "1.1.0",
+        "value": {
+          "province": "podlaskie",
+          "total": 356,
+          "total_per_10k": 3.03,
+          "dead": 28,
+          "recovered": 0,
+          "dead_by_covid": 2,
+          "dead_with_covid": 26,
+          "date": {
+            "_type": "datetime",
+            "_format": "%Y-%m-%d %H:%M:%S",
+            "value": "2020-12-31 23:55:01"
+          },
+          "VERSION": "1.1.0"
+        }
+      },
+      {
+        "_type": "LocationEntity",
+        "_version": "1.1.0",
+        "value": {
+          "province": "pomorskie",
+          "total": 1288,
+          "total_per_10k": 5.49,
+          "dead": 42,
+          "recovered": 0,
+          "dead_by_covid": 11,
+          "dead_with_covid": 31,
+          "date": {
+            "_type": "datetime",
+            "_format": "%Y-%m-%d %H:%M:%S",
+            "value": "2020-12-31 23:55:01"
+          },
+          "VERSION": "1.1.0"
+        }
+      },
+      {
+        "_type": "LocationEntity",
+        "_version": "1.1.0",
+        "value": {
+          "province": "warmi\u0144sko-mazurskie",
+          "total": 1061,
+          "total_per_10k": 7.47,
+          "dead": 54,
+          "recovered": 0,
+          "dead_by_covid": 9,
+          "dead_with_covid": 45,
+          "date": {
+            "_type": "datetime",
+            "_format": "%Y-%m-%d %H:%M:%S",
+            "value": "2020-12-31 23:55:01"
+          },
+          "VERSION": "1.1.0"
+        }
+      },
+      {
+        "_type": "LocationEntity",
+        "_version": "1.1.0",
+        "value": {
+          "province": "wielkopolskie",
+          "total": 1469,
+          "total_per_10k": 4.2,
+          "dead": 58,
+          "recovered": 0,
+          "dead_by_covid": 15,
+          "dead_with_covid": 43,
+          "date": {
+            "_type": "datetime",
+            "_format": "%Y-%m-%d %H:%M:%S",
+            "value": "2020-12-31 23:55:01"
+          },
+          "VERSION": "1.1.0"
+        }
+      },
+      {
+        "_type": "LocationEntity",
+        "_version": "1.1.0",
+        "value": {
+          "province": "zachodniopomorskie",
+          "total": 900,
+          "total_per_10k": 5.32,
+          "dead": 33,
+          "recovered": 0,
+          "dead_by_covid": 2,
+          "dead_with_covid": 31,
+          "date": {
+            "_type": "datetime",
+            "_format": "%Y-%m-%d %H:%M:%S",
+            "value": "2020-12-31 23:55:01"
+          },
+          "VERSION": "1.1.0"
+        }
+      },
+      {
+        "_type": "LocationEntity",
+        "_version": "1.1.0",
+        "value": {
+          "province": "\u0142\u00f3dzkie",
+          "total": 703,
+          "total_per_10k": 2.87,
+          "dead": 23,
+          "recovered": 0,
+          "dead_by_covid": 2,
+          "dead_with_covid": 21,
+          "date": {
+            "_type": "datetime",
+            "_format": "%Y-%m-%d %H:%M:%S",
+            "value": "2020-12-31 23:55:01"
+          },
+          "VERSION": "1.1.0"
+        }
+      },
+      {
+        "_type": "LocationEntity",
+        "_version": "1.1.0",
+        "value": {
+          "province": "\u015bl\u0105skie",
+          "total": 1046,
+          "total_per_10k": 2.32,
+          "dead": 46,
+          "recovered": 0,
+          "dead_by_covid": 5,
+          "dead_with_covid": 41,
+          "date": {
+            "_type": "datetime",
+            "_format": "%Y-%m-%d %H:%M:%S",
+            "value": "2020-12-31 23:55:01"
+          },
+          "VERSION": "1.1.0"
+        }
+      },
+      {
+        "_type": "LocationEntity",
+        "_version": "1.1.0",
+        "value": {
+          "province": "\u015bwi\u0119tokrzyskie",
+          "total": 193,
+          "total_per_10k": 1.57,
+          "dead": 10,
+          "recovered": 0,
+          "dead_by_covid": 0,
+          "dead_with_covid": 10,
+          "date": {
+            "_type": "datetime",
+            "_format": "%Y-%m-%d %H:%M:%S",
+            "value": "2020-12-31 23:55:01"
+          },
+          "VERSION": "1.1.0"
+        }
+      }
+    ]
+  }
+}
